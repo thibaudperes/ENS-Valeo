@@ -29,7 +29,7 @@ PENALTY_MATRICES = {
     "page": _penalty_matrix(good_to_drift=100, defect_to_drift=1),
     "notebook": _penalty_matrix(good_to_drift=10000, defect_to_drift=1000),
 }
-DEFAULT_MATRIX = "page"
+DEFAULT_MATRIX = "notebook"  # identified on the leaderboard, see results/
 
 
 def get_penalty_matrix(name: str = DEFAULT_MATRIX) -> np.ndarray:

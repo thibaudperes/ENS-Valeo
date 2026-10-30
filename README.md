@@ -14,14 +14,36 @@ Challenge files go in `data/raw/` and are never committed: they are available on
 
 ## Metric
 
-The score is a penalty-weighted accuracy: `1 - mean penalty / 10000`. The challenge page and the supplied notebook disagree on two kinds of cells, so both matrices are implemented in `src/valeo_qc/metrics.py`.
+The score is a penalty-weighted accuracy: `1 - mean penalty / 10000`. The challenge page and the supplied notebook disagree on two kinds of cells. The leaderboard uses the notebook matrix, which is the default in `src/valeo_qc/metrics.py`.
 
 | True → predicted | Page | Notebook |
 |---|---:|---:|
 | GOOD → Drift | 100 | 10000 |
 | Defect → Drift | 1 | 1000 |
 
-`uv run python scripts/constant_tables.py` prints the expected score of constant predictions under both matrices.
+Minimising the expected penalty gives this decision rule:
+
+- **GOOD** requires P(GOOD) > 0.99.
+- **Drift** requires P(drift) > 0.50 + 4.45 × P(GOOD), so it is never chosen above P(GOOD) ≈ 0.09.
+- **Otherwise**, the most likely defect.
+
+## Leaderboard analysis
+
+Metric analysis from two constant submissions, not a model result. They identify the matrix and the composition of the evaluated images. Under the page matrix, no composition gives these scores. Under the notebook matrix, one integer solution exists, with 528 evaluated images, about half of the test set.
+
+| Submission | Public score |
+|---|---:|
+| All Drift | 0.8089 |
+| All Missing | 0.9860 |
+
+| Class | Images | Share | All Missing penalty per image |
+|---|---:|---:|---:|
+| Drift | 68 | 12.9% | 128.8 |
+| GOOD | 61 | 11.6% | 11.6 |
+| Missing | 374 | 70.8% | 0 |
+| Other defects | 25 | 4.7% | 0.05 |
+
+`uv run python scripts/leaderboard_analysis.py` writes `results/leaderboard_constants.json`. These shares are not used by the decision code. They only set realistic ranges for threshold analysis.
 
 ## Preprocessing
 

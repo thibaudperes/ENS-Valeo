@@ -1,0 +1,34 @@
+{
+  "source": "public leaderboard, constant submissions: not a model result",
+  "scores": {
+    "all_drift": 0.808901515151515,
+    "all_missing": 0.985961174242424
+  },
+  "solutions_by_matrix": {
+    "page": [],
+    "notebook": [
+      {
+        "n_images": 528,
+        "good": 61,
+        "missing": 374,
+        "other_defects": 25,
+        "drift": 68
+      }
+    ]
+  },
+  "evaluated_images": 528,
+  "shares": {
+    "good": 0.11553030303030302,
+    "defects": 0.7556818181818182,
+    "missing": 0.7083333333333334,
+    "other_defects": 0.04734848484848485,
+    "drift": 0.12878787878787878
+  },
+  "all_missing_penalty_per_image": {
+    "undetected_drift": 128.78787878787878,
+    "good_as_defect": 11.553030303030303,
+    "other_defects": 0.04734848484848485
+  },
+  "all_missing_pwa_check": 0.9859611742424242,
+  "benchmark_pwa_notebook": 0.9755256872037915
+}

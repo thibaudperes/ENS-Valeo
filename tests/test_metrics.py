@@ -91,9 +91,35 @@ def test_page_matrix_declares_good_only_above_99_percent(p_good, p_drift, expect
     assert minimum_cost_labels(probabilities, "page")[0] == expected
 
 
+def test_notebook_matrix_is_the_default():
+    assert get_penalty_matrix() is PENALTY_MATRICES["notebook"]
+
+
 def test_notebook_matrix_prefers_a_defect_to_drift_when_good_is_uncertain():
     probabilities = np.array([[0.9, 0, 0, 0, 0.1, 0, 0]])
-    assert minimum_cost_labels(probabilities, "notebook")[0] == MISSING
+    assert minimum_cost_labels(probabilities)[0] == MISSING
+
+
+@pytest.mark.parametrize(
+    "p_good, p_drift, kind",
+    [
+        (0.992, 0.008, "good"),
+        (0.992, 0.0, "good"),
+        (0.988, 0.0, "defect"),
+        (0.988, 0.012, "defect"),
+        (0.0, 0.49, "defect"),
+        (0.0, 0.51, "drift"),
+        (0.05, 0.73, "drift"),
+        (0.05, 0.71, "defect"),
+        (0.10, 0.90, "defect"),
+    ],
+)
+def test_notebook_matrix_decision_rule(p_good, p_drift, kind):
+    probabilities = np.zeros((1, 7))
+    probabilities[0, [GOOD, DRIFT]] = p_good, p_drift
+    probabilities[0, MISSING] = 1 - p_good - p_drift
+    label = minimum_cost_labels(probabilities)[0]
+    assert {"good": label == GOOD, "drift": label == DRIFT, "defect": 1 <= label <= 5}[kind]
 
 
 def test_penalty_to_pwa_uses_the_matrix_maximum():
