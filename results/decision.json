@@ -1,0 +1,158 @@
+{
+  "temperature": 1.1634578685297439,
+  "false_alarm_rate": 0.005,
+  "known_minimum_cost_uncalibrated": {
+    "pwa": 0.9995827132157526,
+    "mean_penalty": 4.1728678424740275,
+    "false_good_rate": 0.0002839698991906858,
+    "recall_GOOD": 0.8825910931174089,
+    "recall_Boucle plate": 0.6901408450704225,
+    "recall_Lift-off blanc": 0.9481481481481482,
+    "recall_Lift-off noir": 0.9615384615384616,
+    "recall_Missing": 0.9996909765142151,
+    "recall_Short circuit MOS": 0.9761904761904762,
+    "predicted_drift_rate": 0.0
+  },
+  "rules": {
+    "good_quantile_1.0": {
+      "pwa": 0.9989497704759603,
+      "mean_penalty": 10.502295240396231,
+      "false_good_rate": 0.0002839698991906858,
+      "recall_GOOD": 0.8064777327935223,
+      "recall_Boucle plate": 0.647887323943662,
+      "recall_Lift-off blanc": 0.937037037037037,
+      "recall_Lift-off noir": 0.9519230769230769,
+      "recall_Missing": 0.9949011124845488,
+      "recall_Short circuit MOS": 0.9761904761904762,
+      "predicted_drift_rate": 0.005194491423049045,
+      "pseudo_drift_declared_good": {
+        "Boucle plate": 0.0,
+        "Lift-off blanc": 0.003703703703703704,
+        "Lift-off noir": 0.038461538461538464,
+        "Short circuit MOS": 0.40476190476190477,
+        "blur": 0.004
+      },
+      "pseudo_drift_detected": {
+        "Boucle plate": 0.352112676056338,
+        "Lift-off blanc": 0.18888888888888888,
+        "Lift-off noir": 0.0673076923076923,
+        "Short circuit MOS": 0.0,
+        "blur": 0.612
+      },
+      "mean_pseudo_drift_declared_good": 0.09018542938542938,
+      "expected_change_vs_never_good": 97.36175854472184
+    },
+    "good_quantile_0.9": {
+      "pwa": 0.9988591688813723,
+      "mean_penalty": 11.408311186276878,
+      "false_good_rate": 0.0002839698991906858,
+      "recall_GOOD": 0.745748987854251,
+      "recall_Boucle plate": 0.647887323943662,
+      "recall_Lift-off blanc": 0.937037037037037,
+      "recall_Lift-off noir": 0.9519230769230769,
+      "recall_Missing": 0.9949011124845488,
+      "recall_Short circuit MOS": 0.9761904761904762,
+      "predicted_drift_rate": 0.005194491423049045,
+      "pseudo_drift_declared_good": {
+        "Boucle plate": 0.0,
+        "Lift-off blanc": 0.0,
+        "Lift-off noir": 0.019230769230769232,
+        "Short circuit MOS": 0.31746031746031744,
+        "blur": 0.0
+      },
+      "pseudo_drift_detected": {
+        "Boucle plate": 0.352112676056338,
+        "Lift-off blanc": 0.18888888888888888,
+        "Lift-off noir": 0.0673076923076923,
+        "Short circuit MOS": 0.0,
+        "blur": 0.612
+      },
+      "mean_pseudo_drift_declared_good": 0.06733821733821733,
+      "expected_change_vs_never_good": 71.58136379327446
+    },
+    "good_quantile_0.75": {
+      "pwa": 0.9989425223483933,
+      "mean_penalty": 10.574776516066683,
+      "false_good_rate": 0.0,
+      "recall_GOOD": 0.6396761133603239,
+      "recall_Boucle plate": 0.647887323943662,
+      "recall_Lift-off blanc": 0.937037037037037,
+      "recall_Lift-off noir": 0.9519230769230769,
+      "recall_Missing": 0.9949011124845488,
+      "recall_Short circuit MOS": 0.9920634920634921,
+      "predicted_drift_rate": 0.005194491423049045,
+      "pseudo_drift_declared_good": {
+        "Boucle plate": 0.0,
+        "Lift-off blanc": 0.0,
+        "Lift-off noir": 0.0,
+        "Short circuit MOS": 0.11904761904761904,
+        "blur": 0.0
+      },
+      "pseudo_drift_detected": {
+        "Boucle plate": 0.352112676056338,
+        "Lift-off blanc": 0.18888888888888888,
+        "Lift-off noir": 0.0673076923076923,
+        "Short circuit MOS": 0.0,
+        "blur": 0.612
+      },
+      "mean_pseudo_drift_declared_good": 0.023809523809523808,
+      "expected_change_vs_never_good": 20.207205075626128
+    },
+    "good_quantile_0.5": {
+      "pwa": 0.9986453491181445,
+      "mean_penalty": 13.546508818555207,
+      "false_good_rate": 0.0,
+      "recall_GOOD": 0.4404858299595142,
+      "recall_Boucle plate": 0.647887323943662,
+      "recall_Lift-off blanc": 0.937037037037037,
+      "recall_Lift-off noir": 0.9519230769230769,
+      "recall_Missing": 0.9949011124845488,
+      "recall_Short circuit MOS": 0.9920634920634921,
+      "predicted_drift_rate": 0.005194491423049045,
+      "pseudo_drift_declared_good": {
+        "Boucle plate": 0.0,
+        "Lift-off blanc": 0.0,
+        "Lift-off noir": 0.0,
+        "Short circuit MOS": 0.05555555555555555,
+        "blur": 0.0
+      },
+      "pseudo_drift_detected": {
+        "Boucle plate": 0.352112676056338,
+        "Lift-off blanc": 0.18888888888888888,
+        "Lift-off noir": 0.0673076923076923,
+        "Short circuit MOS": 0.0,
+        "blur": 0.612
+      },
+      "mean_pseudo_drift_declared_good": 0.01111111111111111,
+      "expected_change_vs_never_good": 7.789841737210157
+    },
+    "good_quantile_0.25": {
+      "pwa": 0.9983215994201498,
+      "mean_penalty": 16.784005798502054,
+      "false_good_rate": 0.0,
+      "recall_GOOD": 0.22348178137651822,
+      "recall_Boucle plate": 0.647887323943662,
+      "recall_Lift-off blanc": 0.937037037037037,
+      "recall_Lift-off noir": 0.9519230769230769,
+      "recall_Missing": 0.9949011124845488,
+      "recall_Short circuit MOS": 0.9920634920634921,
+      "predicted_drift_rate": 0.005194491423049045,
+      "pseudo_drift_declared_good": {
+        "Boucle plate": 0.0,
+        "Lift-off blanc": 0.0,
+        "Lift-off noir": 0.0,
+        "Short circuit MOS": 0.007936507936507936,
+        "blur": 0.0
+      },
+      "pseudo_drift_detected": {
+        "Boucle plate": 0.352112676056338,
+        "Lift-off blanc": 0.18888888888888888,
+        "Lift-off noir": 0.0673076923076923,
+        "Short circuit MOS": 0.0,
+        "blur": 0.612
+      },
+      "mean_pseudo_drift_declared_good": 0.0015873015873015873,
+      "expected_change_vs_never_good": -0.7420649525912686
+    }
+  }
+}

@@ -84,6 +84,18 @@ The detector is the mean cosine distance to the 5 nearest train images of the sa
 
 At 0.5% of false alarms, it detects 61% of blurred images but no held-out Short circuit MOS. `uv run python scripts/evaluate_drift.py` writes `results/drift.json`.
 
+## Decision rule
+
+Classifier probabilities are calibrated with one temperature (T = 1.16), fitted on out-of-fold predictions. An image is labelled:
+
+1. **Drift** if its kNN distance exceeds the threshold of its component (0.5% of false alarms).
+2. **GOOD** if P(GOOD) exceeds the minimum-cost threshold of about 0.99, and it lies among the closest 25% of known GOOD images of its component.
+3. **Otherwise**, the most likely defect.
+
+Declaring GOOD can save at most 11.6 penalty points per image, while each drift image declared GOOD costs 10,000 instead of 1,000. On pseudo-drift, the proximity filter lowers the share declared GOOD from 9.0% to 0.2%, at the price of a GOOD recall of 22%.
+
+`uv run python scripts/evaluate_decision.py` writes `results/decision.json` and the submission.
+
 ## Preprocessing
 
 Each image is rotated to a common orientation and cropped, using the per-component parameters of the challenge notebook, copied into `src/valeo_qc/alignment.py`. 21 of the 9,333 images are magnified by a constant factor of about 1.85, whatever their size, so they are first scaled by 0.54 and centred. On these images, the median correlation with the same defects at the base scale is:
