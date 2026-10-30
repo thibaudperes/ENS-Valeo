@@ -6,6 +6,7 @@ train dependency group.
 
 import argparse
 import time
+from pathlib import Path
 
 import numpy as np
 import pandas as pd
@@ -14,7 +15,7 @@ import torch
 from PIL import Image, ImageFilter
 
 from valeo_qc.data import load_test, load_train
-from valeo_qc.embedding_cache import cache_path, save_embeddings
+from valeo_qc.embedding_cache import CACHE_DIR, cache_path, save_embeddings
 from valeo_qc.metrics import MISSING
 from valeo_qc.preprocessing import VIEWS, to_model_input
 from valeo_qc.validation import SEED
@@ -54,34 +55,44 @@ def embed(
     return np.concatenate(embeddings)
 
 
-def main() -> None:
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--batch-size", type=int, default=32)
-    parser.add_argument("--blur", action="store_true", help="embed blurred train images only")
-    args = parser.parse_args()
-
-    device = "mps" if torch.backends.mps.is_available() else "cpu"
+def extract(cache_dir: Path = CACHE_DIR, batch_size: int = 32, blur: bool = False) -> None:
+    device = (
+        "mps"
+        if torch.backends.mps.is_available()
+        else "cuda"
+        if torch.cuda.is_available()
+        else "cpu"
+    )
     model = timm.create_model(MODEL_NAME, pretrained=True, num_classes=0, img_size=INPUT_SIZE)
     model = model.eval().to(device)
-    if args.blur:
+    if blur:
         train = load_train()
         images = train.groupby(train["label"] == MISSING).sample(
             BLUR_SAMPLE // 2, random_state=SEED
         )
         for view in VIEWS:
-            embeddings = embed(model, images, view, device, args.batch_size, blur=True)
-            save_embeddings(cache_path(f"blur_{view}"), images["filename"].tolist(), embeddings)
+            embeddings = embed(model, images, view, device, batch_size, blur=True)
+            path = cache_path(f"blur_{view}", cache_dir)
+            save_embeddings(path, images["filename"].tolist(), embeddings)
         return
 
     images = pd.concat([load_train(), load_test()], ignore_index=True)
     for view in VIEWS:
         start = time.perf_counter()
-        embeddings = embed(model, images, view, device, args.batch_size)
-        path = cache_path(view)
+        embeddings = embed(model, images, view, device, batch_size)
+        path = cache_path(view, cache_dir)
         save_embeddings(path, images["filename"].tolist(), embeddings)
         elapsed = time.perf_counter() - start
         size = path.stat().st_size / 1e6
         print(f"{path}: {embeddings.shape}, {size:.1f} MB, {elapsed:.0f} s on {device}", flush=True)
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--batch-size", type=int, default=32)
+    parser.add_argument("--blur", action="store_true", help="embed blurred train images only")
+    args = parser.parse_args()
+    extract(batch_size=args.batch_size, blur=args.blur)
 
 
 if __name__ == "__main__":

@@ -2,6 +2,7 @@ import numpy as np
 
 from valeo_qc.decision import apply_temperature, decide, fit_temperature
 from valeo_qc.metrics import DRIFT, GOOD, MISSING
+from valeo_qc.pipeline import out_of_fold_inference
 
 
 def _probabilities(p_good):
@@ -28,3 +29,14 @@ def test_temperature_softens_overconfident_probabilities():
     temperature = fit_temperature(probabilities, labels)
     assert temperature > 1
     assert apply_temperature(probabilities, temperature)[0, GOOD] < 0.8
+
+
+def test_out_of_fold_inference_never_sees_the_scored_image():
+    rng = np.random.default_rng(0)
+    features = rng.normal(size=(60, 8))
+    labels = np.tile([GOOD, MISSING], 30)
+    libs = np.array(["Die01"] * 60)
+    folds = np.tile(np.arange(5), 12)
+    known = out_of_fold_inference((features, features, labels, libs), folds)
+    assert known["drift"].min() > 0.1
+    assert known["good"].min() > 0.1
