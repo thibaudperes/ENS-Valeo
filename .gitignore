@@ -1,0 +1,30 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+
+# data (challenge files, not redistributable)
+data/
+submissions/
+
+# never tracked, wherever they are: challenge images and supplied model files
+*.png
+*.pkl
+*.pt
+
+# local tooling
+.ipynb_checkpoints/
+.DS_Store
+.ruff_cache/
+.pytest_cache/
+# MLflow (local tracking)
+mlflow.db
+mlruns/
+# trained models (built from the challenge data), root folder only
+/models/
