@@ -7,7 +7,14 @@ from PIL import Image
 import valeo_qc
 from valeo_qc.alignment import ALIGNMENTS, Alignment
 from valeo_qc.data import LIBS
-from valeo_qc.preprocessing import BACKGROUND, align, normalize_scale
+from valeo_qc.preprocessing import (
+    BACKGROUND,
+    align,
+    crop_view,
+    full_view,
+    normalize_scale,
+    to_model_input,
+)
 
 
 def test_alignments_cover_every_component():
@@ -27,6 +34,24 @@ def test_preprocessing_runs_without_challenge_files(lib, tmp_path, monkeypatch):
 def test_package_does_not_read_supplementary_files():
     sources = Path(valeo_qc.__file__).parent.glob("*.py")
     assert not [path.name for path in sources if "Supp_files" in path.read_text()]
+
+
+def test_views_give_the_crop_and_the_base_field_of_view():
+    image = Image.fromarray(np.zeros((1365, 1170), dtype=np.uint8))
+    assert crop_view(image, "Die02").size == (160, 720)
+    assert full_view(image, "Die02").size == (720, 840)
+
+
+def test_full_view_keeps_a_standard_image():
+    image = Image.fromarray(np.zeros((630, 540), dtype=np.uint8))
+    assert full_view(image, "Die01") is image
+
+
+def test_to_model_input_is_a_normalised_three_channel_square():
+    pixels = to_model_input(Image.fromarray(np.full((20, 10), 255, dtype=np.uint8)), 14)
+    assert pixels.shape == (3, 14, 14)
+    assert pixels.dtype == np.float32
+    assert pixels[0, 0, 0] == pytest.approx((1 - 0.485) / 0.229)
 
 
 def test_align_returns_the_box_size():

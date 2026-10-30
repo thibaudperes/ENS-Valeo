@@ -1,0 +1,56 @@
+{
+  "random_folds": {
+    "pwa": 0.9995827132157526,
+    "mean_penalty": 4.1728678424740275,
+    "false_good_rate": 0.0002839698991906858,
+    "recall_GOOD": 0.8825910931174089,
+    "recall_Boucle plate": 0.6901408450704225,
+    "recall_Lift-off blanc": 0.9481481481481482,
+    "recall_Lift-off noir": 0.9615384615384616,
+    "recall_Missing": 0.9996909765142151,
+    "recall_Short circuit MOS": 0.9761904761904762,
+    "predicted_drift_rate": 0.0
+  },
+  "grouped_0.97": {
+    "pwa": 0.9995706692437787,
+    "mean_penalty": 4.293307562213095,
+    "false_good_rate": 0.0002839698991906858,
+    "recall_GOOD": 0.8744939271255061,
+    "recall_Boucle plate": 0.6901408450704225,
+    "recall_Lift-off blanc": 0.9555555555555556,
+    "recall_Lift-off noir": 0.9807692307692307,
+    "recall_Missing": 0.9996909765142151,
+    "recall_Short circuit MOS": 0.9682539682539683,
+    "predicted_drift_rate": 0.0,
+    "grouped_images": 0.7181686397680599,
+    "rare_defects_grouped": 0.043782837127845885
+  },
+  "grouped_0.98": {
+    "pwa": 0.9995730490456632,
+    "mean_penalty": 4.269509543367963,
+    "false_good_rate": 0.0002839698991906858,
+    "recall_GOOD": 0.8761133603238866,
+    "recall_Boucle plate": 0.676056338028169,
+    "recall_Lift-off blanc": 0.9444444444444444,
+    "recall_Lift-off noir": 0.9807692307692307,
+    "recall_Missing": 0.9996909765142151,
+    "recall_Short circuit MOS": 0.9761904761904762,
+    "predicted_drift_rate": 0.0,
+    "grouped_images": 0.5211403720705484,
+    "rare_defects_grouped": 0.005253940455341506
+  },
+  "grouped_0.99": {
+    "pwa": 0.9995743053877748,
+    "mean_penalty": 4.256946122251752,
+    "false_good_rate": 0.0002839698991906858,
+    "recall_GOOD": 0.8769230769230769,
+    "recall_Boucle plate": 0.7183098591549296,
+    "recall_Lift-off blanc": 0.9592592592592593,
+    "recall_Lift-off noir": 0.9615384615384616,
+    "recall_Missing": 0.9996909765142151,
+    "recall_Short circuit MOS": 0.9682539682539683,
+    "predicted_drift_rate": 0.0,
+    "grouped_images": 0.12478859627929452,
+    "rare_defects_grouped": 0.0
+  }
+}

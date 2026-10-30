@@ -1,0 +1,258 @@
+{
+  "constant_missing": {
+    "pwa": 0.9985011959410486,
+    "mean_penalty": 14.988040589514375,
+    "false_good_rate": 0.0,
+    "recall_GOOD": 0.0,
+    "recall_Boucle plate": 0.0,
+    "recall_Lift-off blanc": 0.0,
+    "recall_Lift-off noir": 0.0,
+    "recall_Missing": 1.0,
+    "recall_Short circuit MOS": 0.0,
+    "predicted_drift_rate": 0.0
+  },
+  "crop_C0.01": {
+    "log_loss": 0.03675653412938118,
+    "argmax": {
+      "pwa": 0.9962510751389224,
+      "mean_penalty": 37.48924861077555,
+      "false_good_rate": 0.00440153343745563,
+      "recall_GOOD": 0.9975708502024292,
+      "recall_Boucle plate": 0.6338028169014085,
+      "recall_Lift-off blanc": 0.937037037037037,
+      "recall_Lift-off noir": 0.9711538461538461,
+      "recall_Missing": 0.9996909765142151,
+      "recall_Short circuit MOS": 0.8492063492063492,
+      "predicted_drift_rate": 0.0
+    },
+    "minimum_cost": {
+      "pwa": 0.9989352258999759,
+      "mean_penalty": 10.647741000241604,
+      "false_good_rate": 0.0001419849495953429,
+      "recall_GOOD": 0.36761133603238866,
+      "recall_Boucle plate": 0.647887323943662,
+      "recall_Lift-off blanc": 0.9555555555555556,
+      "recall_Lift-off noir": 0.9807692307692307,
+      "recall_Missing": 0.9996909765142151,
+      "recall_Short circuit MOS": 0.9841269841269841,
+      "predicted_drift_rate": 0.0
+    }
+  },
+  "crop_C0.1": {
+    "log_loss": 0.032707031816244125,
+    "argmax": {
+      "pwa": 0.997215027784489,
+      "mean_penalty": 27.84972215510993,
+      "false_good_rate": 0.0032656538406928867,
+      "recall_GOOD": 0.9959514170040485,
+      "recall_Boucle plate": 0.676056338028169,
+      "recall_Lift-off blanc": 0.9296296296296296,
+      "recall_Lift-off noir": 0.9423076923076923,
+      "recall_Missing": 0.9996909765142151,
+      "recall_Short circuit MOS": 0.8968253968253969,
+      "predicted_drift_rate": 0.0
+    },
+    "minimum_cost": {
+      "pwa": 0.9994787992268664,
+      "mean_penalty": 5.2120077313360715,
+      "false_good_rate": 0.0002839698991906858,
+      "recall_GOOD": 0.8129554655870446,
+      "recall_Boucle plate": 0.704225352112676,
+      "recall_Lift-off blanc": 0.9407407407407408,
+      "recall_Lift-off noir": 0.9615384615384616,
+      "recall_Missing": 0.9996909765142151,
+      "recall_Short circuit MOS": 0.9682539682539683,
+      "predicted_drift_rate": 0.0
+    }
+  },
+  "crop_C1.0": {
+    "log_loss": 0.037618253380060196,
+    "argmax": {
+      "pwa": 0.9975762261415801,
+      "mean_penalty": 24.237738584199082,
+      "false_good_rate": 0.0028396989919068577,
+      "recall_GOOD": 0.9951417004048583,
+      "recall_Boucle plate": 0.6901408450704225,
+      "recall_Lift-off blanc": 0.9296296296296296,
+      "recall_Lift-off noir": 0.9615384615384616,
+      "recall_Missing": 0.9992274412855378,
+      "recall_Short circuit MOS": 0.9206349206349206,
+      "predicted_drift_rate": 0.0
+    },
+    "minimum_cost": {
+      "pwa": 0.9995428485141339,
+      "mean_penalty": 4.571514858661512,
+      "false_good_rate": 0.0004259548487860287,
+      "recall_GOOD": 0.9368421052631579,
+      "recall_Boucle plate": 0.7183098591549296,
+      "recall_Lift-off blanc": 0.9444444444444444,
+      "recall_Lift-off noir": 0.9807692307692307,
+      "recall_Missing": 0.9992274412855378,
+      "recall_Short circuit MOS": 0.9682539682539683,
+      "predicted_drift_rate": 0.0
+    }
+  },
+  "full_C0.01": {
+    "log_loss": 0.05262329801917076,
+    "argmax": {
+      "pwa": 0.993342002899251,
+      "mean_penalty": 66.57997100748973,
+      "false_good_rate": 0.007809172227743859,
+      "recall_GOOD": 0.9910931174089069,
+      "recall_Boucle plate": 0.5915492957746479,
+      "recall_Lift-off blanc": 0.9,
+      "recall_Lift-off noir": 0.7788461538461539,
+      "recall_Missing": 0.9995364647713226,
+      "recall_Short circuit MOS": 0.8253968253968254,
+      "predicted_drift_rate": 0.0
+    },
+    "minimum_cost": {
+      "pwa": 0.9988407827977772,
+      "mean_penalty": 11.592172022227592,
+      "false_good_rate": 0.0001419849495953429,
+      "recall_GOOD": 0.3044534412955466,
+      "recall_Boucle plate": 0.6197183098591549,
+      "recall_Lift-off blanc": 0.9333333333333333,
+      "recall_Lift-off noir": 0.9134615384615384,
+      "recall_Missing": 0.9995364647713226,
+      "recall_Short circuit MOS": 0.9682539682539683,
+      "predicted_drift_rate": 0.0
+    }
+  },
+  "full_C0.1": {
+    "log_loss": 0.04459989443421364,
+    "argmax": {
+      "pwa": 0.9956372070548442,
+      "mean_penalty": 43.627929451558344,
+      "false_good_rate": 0.005111458185432344,
+      "recall_GOOD": 0.9910931174089069,
+      "recall_Boucle plate": 0.647887323943662,
+      "recall_Lift-off blanc": 0.9074074074074074,
+      "recall_Lift-off noir": 0.8269230769230769,
+      "recall_Missing": 0.9993819530284301,
+      "recall_Short circuit MOS": 0.873015873015873,
+      "predicted_drift_rate": 0.0
+    },
+    "minimum_cost": {
+      "pwa": 0.9994737859386326,
+      "mean_penalty": 5.2621406136748,
+      "false_good_rate": 0.0001419849495953429,
+      "recall_GOOD": 0.728744939271255,
+      "recall_Boucle plate": 0.6619718309859155,
+      "recall_Lift-off blanc": 0.9185185185185185,
+      "recall_Lift-off noir": 0.9134615384615384,
+      "recall_Missing": 0.9993819530284301,
+      "recall_Short circuit MOS": 0.9841269841269841,
+      "predicted_drift_rate": 0.0
+    }
+  },
+  "full_C1.0": {
+    "log_loss": 0.04908648505806923,
+    "argmax": {
+      "pwa": 0.9964815414351292,
+      "mean_penalty": 35.18458564870742,
+      "false_good_rate": 0.004117563538264944,
+      "recall_GOOD": 0.9902834008097166,
+      "recall_Boucle plate": 0.6338028169014085,
+      "recall_Lift-off blanc": 0.8888888888888888,
+      "recall_Lift-off noir": 0.8557692307692307,
+      "recall_Missing": 0.9993819530284301,
+      "recall_Short circuit MOS": 0.9047619047619048,
+      "predicted_drift_rate": 0.0
+    },
+    "minimum_cost": {
+      "pwa": 0.9993372553756946,
+      "mean_penalty": 6.627446243053877,
+      "false_good_rate": 0.0005679397983813716,
+      "recall_GOOD": 0.8801619433198381,
+      "recall_Boucle plate": 0.647887323943662,
+      "recall_Lift-off blanc": 0.9111111111111111,
+      "recall_Lift-off noir": 0.9134615384615384,
+      "recall_Missing": 0.9993819530284301,
+      "recall_Short circuit MOS": 0.9682539682539683,
+      "predicted_drift_rate": 0.0
+    }
+  },
+  "crop+full_C0.01": {
+    "log_loss": 0.03207304701209068,
+    "argmax": {
+      "pwa": 0.9973346460497705,
+      "mean_penalty": 26.653539502295242,
+      "false_good_rate": 0.003123668891097544,
+      "recall_GOOD": 0.9951417004048583,
+      "recall_Boucle plate": 0.647887323943662,
+      "recall_Lift-off blanc": 0.9444444444444444,
+      "recall_Lift-off noir": 0.9423076923076923,
+      "recall_Missing": 0.9996909765142151,
+      "recall_Short circuit MOS": 0.9047619047619048,
+      "predicted_drift_rate": 0.0
+    },
+    "minimum_cost": {
+      "pwa": 0.9992915800918096,
+      "mean_penalty": 7.084199081903842,
+      "false_good_rate": 0.0001419849495953429,
+      "recall_GOOD": 0.6064777327935222,
+      "recall_Boucle plate": 0.6619718309859155,
+      "recall_Lift-off blanc": 0.9555555555555556,
+      "recall_Lift-off noir": 0.9615384615384616,
+      "recall_Missing": 0.9996909765142151,
+      "recall_Short circuit MOS": 0.9841269841269841,
+      "predicted_drift_rate": 0.0
+    }
+  },
+  "crop+full_C0.1": {
+    "log_loss": 0.030604666098952293,
+    "argmax": {
+      "pwa": 0.9978178545542401,
+      "mean_penalty": 21.821454457598453,
+      "false_good_rate": 0.002555729092716172,
+      "recall_GOOD": 0.9951417004048583,
+      "recall_Boucle plate": 0.676056338028169,
+      "recall_Lift-off blanc": 0.937037037037037,
+      "recall_Lift-off noir": 0.9519230769230769,
+      "recall_Missing": 0.9996909765142151,
+      "recall_Short circuit MOS": 0.9285714285714286,
+      "predicted_drift_rate": 0.0
+    },
+    "minimum_cost": {
+      "pwa": 0.9995827132157526,
+      "mean_penalty": 4.1728678424740275,
+      "false_good_rate": 0.0002839698991906858,
+      "recall_GOOD": 0.8825910931174089,
+      "recall_Boucle plate": 0.6901408450704225,
+      "recall_Lift-off blanc": 0.9481481481481482,
+      "recall_Lift-off noir": 0.9615384615384616,
+      "recall_Missing": 0.9996909765142151,
+      "recall_Short circuit MOS": 0.9761904761904762,
+      "predicted_drift_rate": 0.0
+    }
+  },
+  "crop+full_C1.0": {
+    "log_loss": 0.04105237126350403,
+    "argmax": {
+      "pwa": 0.9974541918337763,
+      "mean_penalty": 25.458081662237255,
+      "false_good_rate": 0.0029816839415022006,
+      "recall_GOOD": 0.994331983805668,
+      "recall_Boucle plate": 0.6619718309859155,
+      "recall_Lift-off blanc": 0.9333333333333333,
+      "recall_Lift-off noir": 0.9423076923076923,
+      "recall_Missing": 0.9989184177997528,
+      "recall_Short circuit MOS": 0.9365079365079365,
+      "predicted_drift_rate": 0.0
+    },
+    "minimum_cost": {
+      "pwa": 0.9995596883305146,
+      "mean_penalty": 4.403116694853829,
+      "false_good_rate": 0.0004259548487860287,
+      "recall_GOOD": 0.9481781376518219,
+      "recall_Boucle plate": 0.676056338028169,
+      "recall_Lift-off blanc": 0.9407407407407408,
+      "recall_Lift-off noir": 0.9711538461538461,
+      "recall_Missing": 0.9989184177997528,
+      "recall_Short circuit MOS": 0.9761904761904762,
+      "predicted_drift_rate": 0.0
+    }
+  },
+  "best_by_log_loss": "crop+full_C0.1"
+}

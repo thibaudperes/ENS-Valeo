@@ -45,6 +45,27 @@ Metric analysis from two constant submissions, not a model result. They identify
 
 `uv run python scripts/leaderboard_analysis.py` writes `results/leaderboard_constants.json`. These shares are not used by the decision code. They only set realistic ranges for threshold analysis.
 
+## Baseline
+
+Logistic regression on frozen DINOv2 ViT-S/14 embeddings, with 5-fold out-of-fold predictions stratified on label and component. Each image gives a crop view and a full view of 768 dimensions. The cache of both views takes 34 MB in float16.
+
+The train set has no drift image, so these scores cover the six known classes only and cannot be compared with leaderboard scores.
+
+| Prediction | Mean penalty | PWA | False GOOD rate | GOOD recall |
+|---|---:|---:|---:|---:|
+| All Missing | 15.0 | 0.9985 | 0.00% | 0.0% |
+| Logistic regression, argmax | 21.8 | 0.9978 | 0.26% | 99.5% |
+| Logistic regression, minimum cost | 4.2 | 0.9996 | 0.03% | 88.3% |
+
+Keeping near-duplicates in the same fold changes the penalty from 4.2 to 4.3. These groups contain at most 4.4% of the rare defects, so this check says little about them.
+
+```bash
+uv sync --group train
+uv run python scripts/extract_embeddings.py
+uv run python scripts/run_baseline.py
+uv run python scripts/grouped_folds_check.py
+```
+
 ## Preprocessing
 
 Each image is rotated to a common orientation and cropped, using the per-component parameters of the challenge notebook, copied into `src/valeo_qc/alignment.py`. 21 of the 9,333 images are magnified by a constant factor of about 1.85, whatever their size, so they are first scaled by 0.54 and centred. On these images, the median correlation with the same defects at the base scale is:
