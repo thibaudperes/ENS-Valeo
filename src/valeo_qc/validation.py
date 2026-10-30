@@ -26,6 +26,17 @@ def make_folds(df: pd.DataFrame, n_folds: int = N_FOLDS, seed: int = SEED) -> np
     return folds
 
 
+def fit_and_predict(
+    train_features: np.ndarray, train_labels: np.ndarray, query: np.ndarray, c: float = 0.1
+) -> np.ndarray:
+    """Probabilities of `query` over all seven labels, from a model fitted on the train part."""
+    model = make_pipeline(StandardScaler(), LogisticRegression(C=c, max_iter=2000))
+    model.fit(train_features, train_labels)
+    probabilities = np.zeros((len(query), N_CLASSES), dtype=np.float32)
+    probabilities[:, model.classes_] = model.predict_proba(query)
+    return probabilities
+
+
 def out_of_fold_probabilities(
     features: np.ndarray, labels: np.ndarray, folds: np.ndarray, c: float = 0.1
 ) -> np.ndarray:
@@ -33,10 +44,9 @@ def out_of_fold_probabilities(
     probabilities = np.zeros((len(labels), N_CLASSES), dtype=np.float32)
     for fold in np.unique(folds):
         validation = folds == fold
-        model = make_pipeline(StandardScaler(), LogisticRegression(C=c, max_iter=2000))
-        model.fit(features[~validation], labels[~validation])
-        classes = model.classes_
-        probabilities[np.ix_(validation, classes)] = model.predict_proba(features[validation])
+        probabilities[validation] = fit_and_predict(
+            features[~validation], labels[~validation], features[validation], c
+        )
     return probabilities
 
 

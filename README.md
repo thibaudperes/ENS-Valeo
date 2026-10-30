@@ -66,6 +66,24 @@ uv run python scripts/run_baseline.py
 uv run python scripts/grouped_folds_check.py
 ```
 
+## Drift detection
+
+No labelled drift exists in the train set, so pseudo-drift replaces it: each rare defect removed from training, and blurred train images.
+
+Without a detector, the classifier sends pseudo-drift to GOOD, even with the minimum-cost rule:
+
+| Pseudo-drift | Declared GOOD |
+|---|---:|
+| Short circuit MOS | 51.6% |
+| Blur | 27.0% |
+| Lift-off noir | 8.7% |
+| Lift-off blanc | 1.1% |
+| Boucle plate | 0.0% |
+
+The detector is the mean cosine distance to the 5 nearest train images of the same component, on the crop embedding, with one threshold per component. It reaches an AUROC of 0.919 to 0.989 depending on the pseudo-drift, and outperforms Mahalanobis on the same embeddings on all of them. Adding the full view brings no gain at low false alarm rates.
+
+At 0.5% of false alarms, it detects 61% of blurred images but no held-out Short circuit MOS. `uv run python scripts/evaluate_drift.py` writes `results/drift.json`.
+
 ## Preprocessing
 
 Each image is rotated to a common orientation and cropped, using the per-component parameters of the challenge notebook, copied into `src/valeo_qc/alignment.py`. 21 of the 9,333 images are magnified by a constant factor of about 1.85, whatever their size, so they are first scaled by 0.54 and centred. On these images, the median correlation with the same defects at the base scale is:

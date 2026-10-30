@@ -33,9 +33,13 @@ def validate_submission_file(path: Path, raw_dir: Path = RAW_DIR) -> None:
     validate_submission(pd.read_csv(path, index_col=0), example)
 
 
-def write_constant_submission(label: int, path: Path, raw_dir: Path = RAW_DIR) -> None:
-    """Write `label` for every test image, then validate the file as written."""
+def write_submission(labels, path: Path, raw_dir: Path = RAW_DIR) -> None:
+    """Write labels in the order of the example, then validate the file as written."""
     example = pd.read_csv(raw_dir / SUBMISSION_EXAMPLE, index_col=0)
     path.parent.mkdir(parents=True, exist_ok=True)
-    example.assign(Label=label).to_csv(path)
+    example.assign(Label=labels).to_csv(path)
     validate_submission_file(path, raw_dir)
+
+
+def write_constant_submission(label: int, path: Path, raw_dir: Path = RAW_DIR) -> None:
+    write_submission(label, path, raw_dir)

@@ -1,0 +1,769 @@
+{
+  "classifier": {
+    "Boucle plate": {
+      "argmax_good": 0.07042253521126761,
+      "minimum_cost_good": 0.0,
+      "n": 71
+    },
+    "Lift-off blanc": {
+      "argmax_good": 0.2777777777777778,
+      "minimum_cost_good": 0.011111111111111112,
+      "n": 270
+    },
+    "Lift-off noir": {
+      "argmax_good": 0.5384615384615384,
+      "minimum_cost_good": 0.08653846153846154,
+      "n": 104
+    },
+    "Short circuit MOS": {
+      "argmax_good": 0.9841269841269841,
+      "minimum_cost_good": 0.5158730158730159,
+      "n": 126
+    },
+    "blur": {
+      "argmax_good": 0.378,
+      "minimum_cost_good": 0.27,
+      "n": 500
+    }
+  },
+  "detectors": {
+    "knn_crop": {
+      "Boucle plate": {
+        "auroc": 0.9461812914773886,
+        "at_0.005": {
+          "recall": 0.3380281690140845,
+          "false_alarm_good": 0.0016194331983805667,
+          "false_alarm_defects": 0.005737234652897304
+        },
+        "at_0.01": {
+          "recall": 0.5352112676056338,
+          "false_alarm_good": 0.004048582995951417,
+          "false_alarm_defects": 0.011187607573149742
+        },
+        "at_0.02": {
+          "recall": 0.6056338028169014,
+          "false_alarm_good": 0.021052631578947368,
+          "false_alarm_defects": 0.019936890418818128
+        },
+        "at_0.05": {
+          "recall": 0.7887323943661971,
+          "false_alarm_good": 0.08340080971659919,
+          "false_alarm_defects": 0.04417670682730924
+        }
+      },
+      "Lift-off blanc": {
+        "auroc": 0.985377122877123,
+        "at_0.005": {
+          "recall": 0.17407407407407408,
+          "false_alarm_good": 0.0016194331983805667,
+          "false_alarm_defects": 0.0059058024509080174
+        },
+        "at_0.01": {
+          "recall": 0.40370370370370373,
+          "false_alarm_good": 0.004858299595141701,
+          "false_alarm_defects": 0.011221024656725233
+        },
+        "at_0.02": {
+          "recall": 0.6518518518518519,
+          "false_alarm_good": 0.022672064777327937,
+          "false_alarm_defects": 0.019784438210541856
+        },
+        "at_0.05": {
+          "recall": 0.9888888888888889,
+          "false_alarm_good": 0.11659919028340081,
+          "false_alarm_defects": 0.03809242580835671
+        }
+      },
+      "Lift-off noir": {
+        "auroc": 0.9800716624945888,
+        "at_0.005": {
+          "recall": 0.09615384615384616,
+          "false_alarm_good": 0.0,
+          "false_alarm_defects": 0.0060527453523562475
+        },
+        "at_0.01": {
+          "recall": 0.19230769230769232,
+          "false_alarm_good": 0.004048582995951417,
+          "false_alarm_defects": 0.01124081279723303
+        },
+        "at_0.02": {
+          "recall": 0.5769230769230769,
+          "false_alarm_good": 0.021052631578947368,
+          "false_alarm_defects": 0.02003170485660758
+        },
+        "at_0.05": {
+          "recall": 0.9615384615384616,
+          "false_alarm_good": 0.08016194331983806,
+          "false_alarm_defects": 0.04481913820435221
+        }
+      },
+      "Short circuit MOS": {
+        "auroc": 0.9185758290885866,
+        "at_0.005": {
+          "recall": 0.0,
+          "false_alarm_good": 0.0,
+          "false_alarm_defects": 0.006071996530287697
+        },
+        "at_0.01": {
+          "recall": 0.0,
+          "false_alarm_good": 0.0032388663967611335,
+          "false_alarm_defects": 0.01142113633077924
+        },
+        "at_0.02": {
+          "recall": 0.07936507936507936,
+          "false_alarm_good": 0.016194331983805668,
+          "false_alarm_defects": 0.020962845164088476
+        },
+        "at_0.05": {
+          "recall": 0.3492063492063492,
+          "false_alarm_good": 0.07368421052631578,
+          "false_alarm_defects": 0.04597368801503542
+        }
+      },
+      "blur": {
+        "auroc": 0.9885861319159217,
+        "at_0.005": {
+          "recall": 0.612,
+          "false_alarm_good": 0.0,
+          "false_alarm_defects": 0.006105352832599744
+        },
+        "at_0.01": {
+          "recall": 0.698,
+          "false_alarm_good": 0.0032388663967611335,
+          "false_alarm_defects": 0.011358795967627431
+        },
+        "at_0.02": {
+          "recall": 0.788,
+          "false_alarm_good": 0.016194331983805668,
+          "false_alarm_defects": 0.020729802640920062
+        },
+        "at_0.05": {
+          "recall": 0.952,
+          "false_alarm_good": 0.07125506072874493,
+          "false_alarm_defects": 0.04642907851767713
+        }
+      },
+      "test_flagged": {
+        "at_0.005": 0.06919431279620854,
+        "at_0.01": 0.07488151658767772,
+        "at_0.02": 0.09573459715639811,
+        "at_0.05": 0.14881516587677726
+      }
+    },
+    "knn_full": {
+      "Boucle plate": {
+        "auroc": 0.9122562841408142,
+        "at_0.005": {
+          "recall": 0.04225352112676056,
+          "false_alarm_good": 0.0024291497975708503,
+          "false_alarm_defects": 0.005593803786574871
+        },
+        "at_0.01": {
+          "recall": 0.11267605633802817,
+          "false_alarm_good": 0.006477732793522267,
+          "false_alarm_defects": 0.010757314974182444
+        },
+        "at_0.02": {
+          "recall": 0.19718309859154928,
+          "false_alarm_good": 0.021052631578947368,
+          "false_alarm_defects": 0.019936890418818128
+        },
+        "at_0.05": {
+          "recall": 0.49295774647887325,
+          "false_alarm_good": 0.038866396761133605,
+          "false_alarm_defects": 0.05206540447504303
+        }
+      },
+      "Lift-off blanc": {
+        "auroc": 0.9434269434269434,
+        "at_0.005": {
+          "recall": 0.13333333333333333,
+          "false_alarm_good": 0.0032388663967611335,
+          "false_alarm_defects": 0.005610512328362616
+        },
+        "at_0.01": {
+          "recall": 0.17037037037037037,
+          "false_alarm_good": 0.010526315789473684,
+          "false_alarm_defects": 0.01018750922781633
+        },
+        "at_0.02": {
+          "recall": 0.3333333333333333,
+          "false_alarm_good": 0.025910931174089068,
+          "false_alarm_defects": 0.019193857965451054
+        },
+        "at_0.05": {
+          "recall": 0.5592592592592592,
+          "false_alarm_good": 0.045344129554655874,
+          "false_alarm_defects": 0.051085191200354346
+        }
+      },
+      "Lift-off noir": {
+        "auroc": 0.895545914814327,
+        "at_0.005": {
+          "recall": 0.019230769230769232,
+          "false_alarm_good": 0.0032388663967611335,
+          "false_alarm_defects": 0.005476293414036605
+        },
+        "at_0.01": {
+          "recall": 0.04807692307692308,
+          "false_alarm_good": 0.0072874493927125505,
+          "false_alarm_defects": 0.010664360858913388
+        },
+        "at_0.02": {
+          "recall": 0.125,
+          "false_alarm_good": 0.02186234817813765,
+          "false_alarm_defects": 0.01988759187202767
+        },
+        "at_0.05": {
+          "recall": 0.4423076923076923,
+          "false_alarm_good": 0.04129554655870445,
+          "false_alarm_defects": 0.051736561464187925
+        }
+      },
+      "Short circuit MOS": {
+        "auroc": 0.8930800894122779,
+        "at_0.005": {
+          "recall": 0.0,
+          "false_alarm_good": 0.0024291497975708503,
+          "false_alarm_defects": 0.005638282492410004
+        },
+        "at_0.01": {
+          "recall": 0.031746031746031744,
+          "false_alarm_good": 0.005668016194331984,
+          "false_alarm_defects": 0.010987422292901547
+        },
+        "at_0.02": {
+          "recall": 0.047619047619047616,
+          "false_alarm_good": 0.020242914979757085,
+          "false_alarm_defects": 0.020239988434292325
+        },
+        "at_0.05": {
+          "recall": 0.25396825396825395,
+          "false_alarm_good": 0.038866396761133605,
+          "false_alarm_defects": 0.052190255891282344
+        }
+      },
+      "blur": {
+        "auroc": 0.8025831118627688,
+        "at_0.005": {
+          "recall": 0.004,
+          "false_alarm_good": 0.0024291497975708503,
+          "false_alarm_defects": 0.0056793979838137155
+        },
+        "at_0.01": {
+          "recall": 0.018,
+          "false_alarm_good": 0.004858299595141701,
+          "false_alarm_defects": 0.011074826068436745
+        },
+        "at_0.02": {
+          "recall": 0.04,
+          "false_alarm_good": 0.020242914979757085,
+          "false_alarm_defects": 0.02001987789294335
+        },
+        "at_0.05": {
+          "recall": 0.156,
+          "false_alarm_good": 0.03805668016194332,
+          "false_alarm_defects": 0.05225046145108619
+        }
+      },
+      "test_flagged": {
+        "at_0.005": 0.05308056872037915,
+        "at_0.01": 0.07109004739336493,
+        "at_0.02": 0.08530805687203792,
+        "at_0.05": 0.12511848341232226
+      }
+    },
+    "knn_crop+full": {
+      "Boucle plate": {
+        "auroc": 0.9481222659461092,
+        "at_0.005": {
+          "recall": 0.08450704225352113,
+          "false_alarm_good": 0.0,
+          "false_alarm_defects": 0.006024096385542169
+        },
+        "at_0.01": {
+          "recall": 0.2535211267605634,
+          "false_alarm_good": 0.004858299595141701,
+          "false_alarm_defects": 0.01104417670682731
+        },
+        "at_0.02": {
+          "recall": 0.6056338028169014,
+          "false_alarm_good": 0.014574898785425101,
+          "false_alarm_defects": 0.02108433734939759
+        },
+        "at_0.05": {
+          "recall": 0.7323943661971831,
+          "false_alarm_good": 0.062348178137651825,
+          "false_alarm_defects": 0.047905909351692484
+        }
+      },
+      "Lift-off blanc": {
+        "auroc": 0.9825757575757577,
+        "at_0.005": {
+          "recall": 0.15925925925925927,
+          "false_alarm_good": 0.0008097165991902834,
+          "false_alarm_defects": 0.006053447512180718
+        },
+        "at_0.01": {
+          "recall": 0.35555555555555557,
+          "false_alarm_good": 0.006477732793522267,
+          "false_alarm_defects": 0.010925734534179832
+        },
+        "at_0.02": {
+          "recall": 0.6111111111111112,
+          "false_alarm_good": 0.022672064777327937,
+          "false_alarm_defects": 0.019784438210541856
+        },
+        "at_0.05": {
+          "recall": 0.9814814814814815,
+          "false_alarm_good": 0.0825910931174089,
+          "false_alarm_defects": 0.04429351838181013
+        }
+      },
+      "Lift-off noir": {
+        "auroc": 0.9749816491313923,
+        "at_0.005": {
+          "recall": 0.038461538461538464,
+          "false_alarm_good": 0.0008097165991902834,
+          "false_alarm_defects": 0.005908632367776337
+        },
+        "at_0.01": {
+          "recall": 0.1346153846153846,
+          "false_alarm_good": 0.005668016194331984,
+          "false_alarm_defects": 0.01095258682807321
+        },
+        "at_0.02": {
+          "recall": 0.5384615384615384,
+          "false_alarm_good": 0.014574898785425101,
+          "false_alarm_defects": 0.021184608733246867
+        },
+        "at_0.05": {
+          "recall": 0.9134615384615384,
+          "false_alarm_good": 0.06153846153846154,
+          "false_alarm_defects": 0.048133736849690155
+        }
+      },
+      "Short circuit MOS": {
+        "auroc": 0.9346435581101921,
+        "at_0.005": {
+          "recall": 0.0,
+          "false_alarm_good": 0.0,
+          "false_alarm_defects": 0.006071996530287697
+        },
+        "at_0.01": {
+          "recall": 0.015873015873015872,
+          "false_alarm_good": 0.004858299595141701,
+          "false_alarm_defects": 0.011131993638860778
+        },
+        "at_0.02": {
+          "recall": 0.09523809523809523,
+          "false_alarm_good": 0.012955465587044534,
+          "false_alarm_defects": 0.0215411305479254
+        },
+        "at_0.05": {
+          "recall": 0.46825396825396826,
+          "false_alarm_good": 0.055870445344129556,
+          "false_alarm_defects": 0.0491542576261385
+        }
+      },
+      "blur": {
+        "auroc": 0.9787250543609567,
+        "at_0.005": {
+          "recall": 0.182,
+          "false_alarm_good": 0.0,
+          "false_alarm_defects": 0.006105352832599744
+        },
+        "at_0.01": {
+          "recall": 0.418,
+          "false_alarm_good": 0.004858299595141701,
+          "false_alarm_defects": 0.011074826068436745
+        },
+        "at_0.02": {
+          "recall": 0.7,
+          "false_alarm_good": 0.012145748987854251,
+          "false_alarm_defects": 0.021439727388896778
+        },
+        "at_0.05": {
+          "recall": 0.858,
+          "false_alarm_good": 0.05263157894736842,
+          "false_alarm_defects": 0.04969473235837001
+        }
+      },
+      "test_flagged": {
+        "at_0.005": 0.06919431279620854,
+        "at_0.01": 0.07582938388625593,
+        "at_0.02": 0.0985781990521327,
+        "at_0.05": 0.14502369668246445
+      }
+    },
+    "mahalanobis_crop": {
+      "Boucle plate": {
+        "auroc": 0.9219834665357811,
+        "at_0.005": {
+          "recall": 0.28169014084507044,
+          "false_alarm_good": 0.0008097165991902834,
+          "false_alarm_defects": 0.005880665519219736
+        },
+        "at_0.01": {
+          "recall": 0.4225352112676056,
+          "false_alarm_good": 0.010526315789473684,
+          "false_alarm_defects": 0.010040160642570281
+        },
+        "at_0.02": {
+          "recall": 0.5211267605633803,
+          "false_alarm_good": 0.029959514170040485,
+          "false_alarm_defects": 0.01835915088927137
+        },
+        "at_0.05": {
+          "recall": 0.704225352112676,
+          "false_alarm_good": 0.09878542510121457,
+          "false_alarm_defects": 0.04145152036718302
+        }
+      },
+      "Lift-off blanc": {
+        "auroc": 0.9819120694120694,
+        "at_0.005": {
+          "recall": 0.28888888888888886,
+          "false_alarm_good": 0.004858299595141701,
+          "false_alarm_defects": 0.005315222205817215
+        },
+        "at_0.01": {
+          "recall": 0.45555555555555555,
+          "false_alarm_good": 0.011336032388663968,
+          "false_alarm_defects": 0.010039864166543629
+        },
+        "at_0.02": {
+          "recall": 0.7037037037037037,
+          "false_alarm_good": 0.027530364372469637,
+          "false_alarm_defects": 0.018898567842905657
+        },
+        "at_0.05": {
+          "recall": 0.9111111111111111,
+          "false_alarm_good": 0.11740890688259109,
+          "false_alarm_defects": 0.03794478074708401
+        }
+      },
+      "Lift-off noir": {
+        "auroc": 0.9648545576029062,
+        "at_0.005": {
+          "recall": 0.11538461538461539,
+          "false_alarm_good": 0.005668016194331984,
+          "false_alarm_defects": 0.0050439544602968725
+        },
+        "at_0.01": {
+          "recall": 0.18269230769230768,
+          "false_alarm_good": 0.012145748987854251,
+          "false_alarm_defects": 0.009799682951433923
+        },
+        "at_0.02": {
+          "recall": 0.4326923076923077,
+          "false_alarm_good": 0.029149797570850202,
+          "false_alarm_defects": 0.018590575010808474
+        },
+        "at_0.05": {
+          "recall": 0.7596153846153846,
+          "false_alarm_good": 0.10607287449392712,
+          "false_alarm_defects": 0.040207522697795074
+        }
+      },
+      "Short circuit MOS": {
+        "auroc": 0.8763444942910106,
+        "at_0.005": {
+          "recall": 0.007936507936507936,
+          "false_alarm_good": 0.0024291497975708503,
+          "false_alarm_defects": 0.005638282492410004
+        },
+        "at_0.01": {
+          "recall": 0.015873015873015872,
+          "false_alarm_good": 0.011336032388663968,
+          "false_alarm_defects": 0.009975422871186931
+        },
+        "at_0.02": {
+          "recall": 0.06349206349206349,
+          "false_alarm_good": 0.02834008097165992,
+          "false_alarm_defects": 0.018794274974700015
+        },
+        "at_0.05": {
+          "recall": 0.23015873015873015,
+          "false_alarm_good": 0.09959514170040486,
+          "false_alarm_defects": 0.041347404944340034
+        }
+      },
+      "blur": {
+        "auroc": 0.9840816622372554,
+        "at_0.005": {
+          "recall": 0.446,
+          "false_alarm_good": 0.0032388663967611335,
+          "false_alarm_defects": 0.005537413034218373
+        },
+        "at_0.01": {
+          "recall": 0.636,
+          "false_alarm_good": 0.009716599190283401,
+          "false_alarm_defects": 0.010222916370864688
+        },
+        "at_0.02": {
+          "recall": 0.77,
+          "false_alarm_good": 0.025101214574898785,
+          "false_alarm_defects": 0.01916796819537129
+        },
+        "at_0.05": {
+          "recall": 0.914,
+          "false_alarm_good": 0.08663967611336032,
+          "false_alarm_defects": 0.04373136447536561
+        }
+      },
+      "test_flagged": {
+        "at_0.005": 0.058767772511848344,
+        "at_0.01": 0.07109004739336493,
+        "at_0.02": 0.08625592417061612,
+        "at_0.05": 0.12890995260663507
+      }
+    },
+    "mahalanobis_full": {
+      "Boucle plate": {
+        "auroc": 0.8495066904411728,
+        "at_0.005": {
+          "recall": 0.07042253521126761,
+          "false_alarm_good": 0.006477732793522267,
+          "false_alarm_defects": 0.004876649454962708
+        },
+        "at_0.01": {
+          "recall": 0.07042253521126761,
+          "false_alarm_good": 0.009716599190283401,
+          "false_alarm_defects": 0.010183591508892713
+        },
+        "at_0.02": {
+          "recall": 0.23943661971830985,
+          "false_alarm_good": 0.019433198380566803,
+          "false_alarm_defects": 0.020223752151462996
+        },
+        "at_0.05": {
+          "recall": 0.4507042253521127,
+          "false_alarm_good": 0.044534412955465584,
+          "false_alarm_defects": 0.051061388410786
+        }
+      },
+      "Lift-off blanc": {
+        "auroc": 0.9384004884004884,
+        "at_0.005": {
+          "recall": 0.10740740740740741,
+          "false_alarm_good": 0.0072874493927125505,
+          "false_alarm_defects": 0.004872287021999114
+        },
+        "at_0.01": {
+          "recall": 0.15555555555555556,
+          "false_alarm_good": 0.010526315789473684,
+          "false_alarm_defects": 0.01018750922781633
+        },
+        "at_0.02": {
+          "recall": 0.32222222222222224,
+          "false_alarm_good": 0.021052631578947368,
+          "false_alarm_defects": 0.020079728333087257
+        },
+        "at_0.05": {
+          "recall": 0.6074074074074074,
+          "false_alarm_good": 0.05506072874493927,
+          "false_alarm_defects": 0.04931345046508194
+        }
+      },
+      "Lift-off noir": {
+        "auroc": 0.9032968041256517,
+        "at_0.005": {
+          "recall": 0.0,
+          "false_alarm_good": 0.005668016194331984,
+          "false_alarm_defects": 0.0050439544602968725
+        },
+        "at_0.01": {
+          "recall": 0.04807692307692308,
+          "false_alarm_good": 0.008906882591093117,
+          "false_alarm_defects": 0.010376134889753566
+        },
+        "at_0.02": {
+          "recall": 0.11538461538461539,
+          "false_alarm_good": 0.017813765182186234,
+          "false_alarm_defects": 0.020608156794927224
+        },
+        "at_0.05": {
+          "recall": 0.33653846153846156,
+          "false_alarm_good": 0.045344129554655874,
+          "false_alarm_defects": 0.05101599654128837
+        }
+      },
+      "Short circuit MOS": {
+        "auroc": 0.8648057931055969,
+        "at_0.005": {
+          "recall": 0.015873015873015872,
+          "false_alarm_good": 0.005668016194331984,
+          "false_alarm_defects": 0.005059997108573081
+        },
+        "at_0.01": {
+          "recall": 0.031746031746031744,
+          "false_alarm_good": 0.009716599190283401,
+          "false_alarm_defects": 0.010264565563105392
+        },
+        "at_0.02": {
+          "recall": 0.06349206349206349,
+          "false_alarm_good": 0.01862348178137652,
+          "false_alarm_defects": 0.020529131126210784
+        },
+        "at_0.05": {
+          "recall": 0.2222222222222222,
+          "false_alarm_good": 0.04777327935222672,
+          "false_alarm_defects": 0.050599971085730805
+        }
+      },
+      "blur": {
+        "auroc": 0.7673046629620681,
+        "at_0.005": {
+          "recall": 0.004,
+          "false_alarm_good": 0.005668016194331984,
+          "false_alarm_defects": 0.005111458185432344
+        },
+        "at_0.01": {
+          "recall": 0.008,
+          "false_alarm_good": 0.008906882591093117,
+          "false_alarm_defects": 0.010364901320460031
+        },
+        "at_0.02": {
+          "recall": 0.03,
+          "false_alarm_good": 0.017813765182186234,
+          "false_alarm_defects": 0.020445832741729376
+        },
+        "at_0.05": {
+          "recall": 0.114,
+          "false_alarm_good": 0.042105263157894736,
+          "false_alarm_defects": 0.05154053670310947
+        }
+      },
+      "test_flagged": {
+        "at_0.005": 0.046445497630331754,
+        "at_0.01": 0.05402843601895735,
+        "at_0.02": 0.06824644549763033,
+        "at_0.05": 0.1033175355450237
+      }
+    },
+    "mahalanobis_crop+full": {
+      "Boucle plate": {
+        "auroc": 0.8940667276474737,
+        "at_0.005": {
+          "recall": 0.16901408450704225,
+          "false_alarm_good": 0.0032388663967611335,
+          "false_alarm_defects": 0.005450372920252439
+        },
+        "at_0.01": {
+          "recall": 0.29577464788732394,
+          "false_alarm_good": 0.011336032388663968,
+          "false_alarm_defects": 0.009896729776247849
+        },
+        "at_0.02": {
+          "recall": 0.5492957746478874,
+          "false_alarm_good": 0.02348178137651822,
+          "false_alarm_defects": 0.019506597819850834
+        },
+        "at_0.05": {
+          "recall": 0.6619718309859155,
+          "false_alarm_good": 0.08825910931174089,
+          "false_alarm_defects": 0.04331612162937464
+        }
+      },
+      "Lift-off blanc": {
+        "auroc": 0.9746378621378622,
+        "at_0.005": {
+          "recall": 0.1925925925925926,
+          "false_alarm_good": 0.004858299595141701,
+          "false_alarm_defects": 0.005315222205817215
+        },
+        "at_0.01": {
+          "recall": 0.40370370370370373,
+          "false_alarm_good": 0.011336032388663968,
+          "false_alarm_defects": 0.010039864166543629
+        },
+        "at_0.02": {
+          "recall": 0.5814814814814815,
+          "false_alarm_good": 0.027530364372469637,
+          "false_alarm_defects": 0.018898567842905657
+        },
+        "at_0.05": {
+          "recall": 0.8592592592592593,
+          "false_alarm_good": 0.10040485829959514,
+          "false_alarm_defects": 0.04104532703381072
+        }
+      },
+      "Lift-off noir": {
+        "auroc": 0.95677782274002,
+        "at_0.005": {
+          "recall": 0.019230769230769232,
+          "false_alarm_good": 0.004858299595141701,
+          "false_alarm_defects": 0.005188067444876783
+        },
+        "at_0.01": {
+          "recall": 0.028846153846153848,
+          "false_alarm_good": 0.011336032388663968,
+          "false_alarm_defects": 0.009943795936013834
+        },
+        "at_0.02": {
+          "recall": 0.2403846153846154,
+          "false_alarm_good": 0.02186234817813765,
+          "false_alarm_defects": 0.01988759187202767
+        },
+        "at_0.05": {
+          "recall": 0.5865384615384616,
+          "false_alarm_good": 0.08663967611336032,
+          "false_alarm_defects": 0.043666234327712924
+        }
+      },
+      "Short circuit MOS": {
+        "auroc": 0.8631400221194137,
+        "at_0.005": {
+          "recall": 0.0,
+          "false_alarm_good": 0.004048582995951417,
+          "false_alarm_defects": 0.005349139800491543
+        },
+        "at_0.01": {
+          "recall": 0.0,
+          "false_alarm_good": 0.010526315789473684,
+          "false_alarm_defects": 0.010119994217146162
+        },
+        "at_0.02": {
+          "recall": 0.047619047619047616,
+          "false_alarm_good": 0.02348178137651822,
+          "false_alarm_defects": 0.0196617030504554
+        },
+        "at_0.05": {
+          "recall": 0.21428571428571427,
+          "false_alarm_good": 0.08906882591093117,
+          "false_alarm_defects": 0.04322683244181003
+        }
+      },
+      "blur": {
+        "auroc": 0.9536807199806717,
+        "at_0.005": {
+          "recall": 0.088,
+          "false_alarm_good": 0.004048582995951417,
+          "false_alarm_defects": 0.00539542808462303
+        },
+        "at_0.01": {
+          "recall": 0.164,
+          "false_alarm_good": 0.012145748987854251,
+          "false_alarm_defects": 0.00979696152207866
+        },
+        "at_0.02": {
+          "recall": 0.372,
+          "false_alarm_good": 0.021052631578947368,
+          "false_alarm_defects": 0.019877892943348005
+        },
+        "at_0.05": {
+          "recall": 0.728,
+          "false_alarm_good": 0.07854251012145749,
+          "false_alarm_defects": 0.04515121397131904
+        }
+      },
+      "test_flagged": {
+        "at_0.005": 0.04454976303317536,
+        "at_0.01": 0.05687203791469194,
+        "at_0.02": 0.08341232227488152,
+        "at_0.05": 0.12511848341232226
+      }
+    }
+  }
+}
