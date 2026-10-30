@@ -173,6 +173,7 @@ Gain and loss are in penalty points per image, using the shares read from the le
 - **Trusting P(GOOD) > 0.99 alone.** Without the proximity filter, 40.5% of held-out Short circuit MOS are still declared GOOD after the detector. These defects resemble GOOD images.
 - **Mahalanobis on PCA components.** kNN has a better AUROC on all five pseudo-drift types.
 - **Adding the full view to the detector.** It does not help at low false alarm rates, and it lowers recall on blur (18.2% against 61.2% at 0.5% false alarms). The classifier does keep both views: log loss of 0.0306 against 0.0327 for the crop alone.
+- **Patch-based detection.** A light PatchCore (1-NN on DINOv2 patches reduced to 64 dimensions, one bank of 10,000 random patches per component, mean of the 5 farthest patches) aimed to catch Short circuit MOS, with a target of 20% recall at 0.5% of false alarms. It stayed at 0%, and it did worse than the global kNN on all five pseudo-drift types (Short circuit MOS AUROC of 0.828 against 0.919, blur recall of 6.0% against 61.2%). A bank balanced across classes, tried separately, did not help either (AUROC of 0.534 to 0.700 on Short circuit MOS). The method was run at 224 pixels only, where the crop is compressed along its length, so a higher resolution remains untested.
 - **Pixel-based near-duplicate search.** It groups 74.7% of the images at a cosine similarity of 0.995, because images of a component share the same layout. It cannot tell two views of one part from two similar parts.
 - **Trusting the challenge page.** The page matrix was my first default, and the first probe submission disproved it.
 
@@ -195,6 +196,8 @@ uv run python scripts/grouped_folds_check.py    # near-duplicates across folds
 uv run python scripts/extract_embeddings.py --blur
 uv run python scripts/evaluate_drift.py         # pseudo-drift and detectors
 uv run python scripts/evaluate_decision.py      # GOOD filter
+uv run python scripts/extract_patches.py
+uv run python scripts/evaluate_patch_drift.py   # patch-based detection
 uv run python scripts/leaderboard_analysis.py   # metric and test composition
 uv run pytest
 ```
@@ -214,6 +217,7 @@ src/valeo_qc/
     embedding_cache.py   float16 embedding cache
     validation.py        folds, logistic regression, scoring
     drift.py             kNN and Mahalanobis scores, thresholds
+    patch_drift.py       patch-based detection, unused by the pipeline
     decision.py          calibration and decision rule
     pipeline.py          from embeddings to final labels
     submission.py        submission writing and validation
@@ -226,10 +230,10 @@ tests/
 - **Pseudo-drift is not real drift.** Rare defects and synthetic blur do not cover foreign bodies or marks seen in test images. The mix of real drift is unknown, and the rates above depend on it.
 - **The public score is not fully independent.** The leaderboard shares guided the choice of the detector threshold and the GOOD filter, so only images outside the public score would give an independent check.
 - **Public shares are an estimate.** They cover about half of the test set. For drift, the other half could differ by about 2 points at 95% confidence.
-- **Short circuit MOS remains undetected.** The detector finds none of them at 0.5% false alarms, and the rule relies on the proximity filter to avoid declaring them GOOD. A detector working on image regions rather than global embeddings could help.
+- **Short circuit MOS remains undetected.** The detector finds none of them at 0.5% false alarms, and the rule relies on the proximity filter to avoid declaring them GOOD. Patch-based detection did not solve it at 224 pixels.
 - **Boucle plate recall stays at about 65%.** It weighs little in the metric, at 1 point per error between defects, but it would matter for a real line.
 - **Parameters were set on the same folds as the scores.** The regularisation strength and the filters make out-of-fold scores slightly optimistic.
-- **No fine-tuning.** [SCORE: decision on fine-tuning and region-based detection.]
+- **No fine-tuning.** [SCORE: decision on fine-tuning.]
 
 ## Credits
 
