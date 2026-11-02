@@ -5,7 +5,7 @@ import numpy as np
 import pytest
 
 import valeo_qc
-from valeo_qc.leaderboard import Composition, solve_composition
+from valeo_qc.leaderboard import Composition, false_good_explanations, solve_composition
 from valeo_qc.metrics import DRIFT, MISSING, penalty_weighted_accuracy
 
 SCORE_ALL_DRIFT = 0.808901515151515
@@ -32,6 +32,17 @@ def test_solution_reproduces_both_scores():
         SCORE_ALL_MISSING
     )
     assert len(labels) == composition.n_images
+
+
+def test_score_gap_is_explained_by_exactly_one_false_good():
+    explanations = false_good_explanations(7700, 40)
+    assert {"good": 13, "drift": 1, "defect_correct_before": 0, "defect_wrong_before": 0} in (
+        explanations
+    )
+    assert all(
+        item["drift"] + item["defect_correct_before"] + item["defect_wrong_before"] == 1
+        for item in explanations
+    )
 
 
 def test_decision_code_does_not_import_the_leaderboard_module():
