@@ -1,9 +1,11 @@
 # Valeo visual quality control
 
+[![CI](https://github.com/thibaudperes/ens-challenge-valeo-qc/actions/workflows/ci.yml/badge.svg)](https://github.com/thibaudperes/ens-challenge-valeo-qc/actions/workflows/ci.yml)
+
 Image classification and out-of-domain detection on a production line, for [ENS Challenge Data n°157](https://challengedata.ens.fr/challenges/157) by Valeo.
 
 - **Model:** logistic regression on frozen DINOv2 embeddings and a kNN drift detector per component. The final rule never declares GOOD, because the leaderboard showed that it costs more than it saves.
-- **Result:** public score of 0.9926, against 0.9860 for a constant prediction and 0.9755 for the notebook benchmark, computed on the whole test set. At least 35 of the 68 drift images are detected.
+- **Result:** public score of 0.9926, 2nd on the public leaderboard (November 2, 2026; first place at 0.9941), against 0.9860 for a constant prediction and 0.9755 for the notebook benchmark, computed on the whole test set. At least 35 of the 68 drift images are detected.
 - **Rigour:** the official metric was identified with two probe submissions, because the challenge page and the supplied notebook disagree. Drift detection is evaluated without a single labelled drift image.
 - **Reproducibility:** one command from the images to the submission file, on a MacBook Air M1 with 8 GB of RAM.
 
@@ -30,6 +32,8 @@ flowchart LR
 | All Missing | 0.9860 | 140 | Probe submission |
 | Pipeline, GOOD when very sure | 0.9911 | 88.6 | `run_pipeline.py --good` |
 | **Pipeline, never GOOD (final)** | **0.9926** | **74.1** | `run_pipeline.py` |
+
+This score ranks 2nd on the public leaderboard (November 2, 2026; first place at 0.9941).
 
 Public scores cover 528 images, about half of the test set, so the benchmark line is only indicative.
 
