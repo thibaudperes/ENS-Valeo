@@ -2,8 +2,8 @@
 
 Image classification and out-of-domain detection on a production line, for [ENS Challenge Data n°157](https://challengedata.ens.fr/challenges/157) by Valeo.
 
-- **Model:** logistic regression on frozen DINOv2 embeddings, a kNN drift detector per component, and a decision rule that minimises the cost of errors.
-- **Result:** public score of [SCORE], against 0.9860 for a constant prediction and 0.9755 for the notebook benchmark, computed on the whole test set.
+- **Model:** logistic regression on frozen DINOv2 embeddings and a kNN drift detector per component. The final rule never declares GOOD, because the leaderboard showed that it costs more than it saves.
+- **Result:** public score of 0.9926, against 0.9860 for a constant prediction and 0.9755 for the notebook benchmark, computed on the whole test set. At least 35 of the 68 drift images are detected.
 - **Rigour:** the official metric was identified with two probe submissions, because the challenge page and the supplied notebook disagree. Drift detection is evaluated without a single labelled drift image.
 - **Reproducibility:** one command from the images to the submission file, on a MacBook Air M1 with 8 GB of RAM.
 
@@ -15,26 +15,25 @@ flowchart LR
     B --> C[Frozen DINOv2 embeddings]
     C --> D[Logistic regression]
     C --> E[kNN distance per component]
-    D --> F[Temperature calibration]
     E --> G{Far from known images?}
-    F --> H{Very sure of GOOD and close to known GOOD?}
     G -- yes --> I[Drift]
-    G -- no --> H
-    H -- yes --> J[GOOD]
-    H -- no --> K[Most likely defect]
+    G -- no --> K[Most likely defect]
+    D --> K
 ```
 
 ## Results
 
 | Prediction | Public score | Mean penalty per image | Source |
 |---|---:|---:|---|
-| Notebook benchmark | 0.9755 | 245 | Supplied notebook, on all 1,055 test images |
 | All Drift | 0.8089 | 1,911 | Probe submission |
+| Notebook benchmark | 0.9755 | 245 | Supplied notebook, on all 1,055 test images |
 | All Missing | 0.9860 | 140 | Probe submission |
-| Pipeline, never GOOD | [SCORE] | [SCORE] | `run_pipeline.py --no-good` |
-| Pipeline, GOOD when very sure | [SCORE] | [SCORE] | `run_pipeline.py --good` |
+| Pipeline, GOOD when very sure | 0.9911 | 88.6 | `run_pipeline.py --good` |
+| **Pipeline, never GOOD (final)** | **0.9926** | **74.1** | `run_pipeline.py` |
 
 Public scores cover 528 images, about half of the test set, so the benchmark line is only indicative.
+
+Penalty totals are whole numbers, so the final score can be read exactly. With 68 drift images and 61 GOOD images among the 528, it means that detected drift minus false alarms equals 35, which gives at least 35 detected drift images (51%). The estimate made before submitting was 50%, for a score of 0.9920.
 
 ## Problem
 
@@ -147,27 +146,22 @@ The detector flags 73 of the 1,055 test images (6.9%).
 
 ## Decision rule
 
-Probabilities are calibrated with one temperature (T = 1.16), fitted on out-of-fold predictions. An image is labelled:
+An image is labelled **Drift** if its kNN distance exceeds the threshold of its component, and otherwise gets the most likely defect. The final rule never declares GOOD.
 
-1. **Drift** if its kNN distance exceeds the threshold of its component.
-2. **GOOD** if P(GOOD) exceeds the minimum-cost threshold of about 0.99, and it lies among the closest 25% of known GOOD images of its component.
-3. **Otherwise**, the most likely defect.
-
-Declaring GOOD can save at most 11.6 penalty points per image, while each drift image declared GOOD costs 10,000 instead of 1,000. If only 1.2% of the drift passes as GOOD, the gain is gone. The classifier threshold alone is therefore not enough: it assumes reliable probabilities, and the classifier has never seen drift.
+This comes from a rule that was tested and removed. It declared GOOD when the calibrated P(GOOD) exceeded the minimum-cost threshold of about 0.99 (temperature T = 1.16), and when the image lay among the closest 25% of known GOOD images of its component. Declaring GOOD can save at most 11.6 penalty points per image, while each drift image declared GOOD costs 10,000 instead of 1,000.
 
 | Proximity filter | GOOD recall | Pseudo-drift declared GOOD | Expected gain | Expected loss |
 |---:|---:|---:|---:|---:|
 | None | 80.6% | 9.0% | 9.3 | 106.7 |
 | Closest 75% | 64.0% | 2.4% | 7.4 | 27.6 |
 | Closest 50% | 44.0% | 1.1% | 5.1 | 12.9 |
-| **Closest 25%** | 22.3% | 0.2% | 2.6 | 1.8 |
+| Closest 25% (submitted) | 22.3% | 0.2% | 2.6 | 1.8 |
 
-Gain and loss are in penalty points per image, using the shares read from the leaderboard. The share declared GOOD is the plain mean over pseudo-drift types, because the mix of real drift is unknown.
-
-[SCORE: comparison of the two submissions, and decision to keep or remove GOOD predictions.]
+Gain and loss are in penalty points per image, using the shares read from the leaderboard. The share declared GOOD is the plain mean over pseudo-drift types, because the mix of real drift is unknown. The expected net gain was 0.7 points. The leaderboard measured a loss of 14.6 points (see below).
 
 ## What didn't work
 
+- **Declaring GOOD.** With the same Drift flags, adding GOOD decisions lowered the public score from 0.9926 to 0.9911: 7,700 more penalty points over 528 images. The only way to reach that exact total is one false GOOD, either 13 correct GOOD and one drift image, or 23 correct GOOD and one defect. Each correct GOOD saves 100 points, and the false one costs 9,000 or 10,000. Precision was 93% to 96%, under the 99% that the metric requires, so one error erased the whole gain and GOOD was removed. Fine-tuning was dropped too, because it would only have served this decision.
 - **The notebook crop on oversized images.** Its fixed pixel box misses the component on the 21 magnified images, with a median correlation of -0.129 on Die02. Resizing them to the base size only reaches 0.377, because their magnification does not depend on their size.
 - **Argmax.** It scores below a constant prediction under this metric (penalty of 21.8 against 15.0).
 - **Trusting P(GOOD) > 0.99 alone.** Without the proximity filter, 40.5% of held-out Short circuit MOS are still declared GOOD after the detector. These defects resemble GOOD images.
@@ -182,7 +176,8 @@ Gain and loss are in penalty points per image, using the shares read from the le
 ```bash
 uv sync --group train
 # place the challenge files in data/raw/
-uv run python scripts/run_pipeline.py --good   # or --no-good, the default
+uv run python scripts/run_pipeline.py          # final rule, never declares GOOD
+uv run python scripts/run_pipeline.py --good   # variant with GOOD decisions
 ```
 
 This extracts the embeddings if they are not cached, fits the classifier and the detector, and writes a validated file in `submissions/`. From an empty cache, it takes about 17 minutes of compute on the M1. Two runs on this machine gave identical embeddings and an identical file.
@@ -228,12 +223,14 @@ tests/
 ## Limits and next steps
 
 - **Pseudo-drift is not real drift.** Rare defects and synthetic blur do not cover foreign bodies or marks seen in test images. The mix of real drift is unknown, and the rates above depend on it.
-- **The public score is not fully independent.** The leaderboard shares guided the choice of the detector threshold and the GOOD filter, so only images outside the public score would give an independent check.
+- **The public score is not fully independent.** The leaderboard shares guided the detector threshold and the GOOD filter, and the public score decided to remove GOOD, so only images outside the public score would give an independent check.
 - **Public shares are an estimate.** They cover about half of the test set. For drift, the other half could differ by about 2 points at 95% confidence.
-- **Short circuit MOS remains undetected.** The detector finds none of them at 0.5% false alarms, and the rule relies on the proximity filter to avoid declaring them GOOD. Patch-based detection did not solve it at 224 pixels.
+- **Short circuit MOS remains undetected.** The detector finds none of them at 0.5% false alarms, so these images get a defect label. Patch-based detection did not solve it at 224 pixels.
 - **Boucle plate recall stays at about 65%.** It weighs little in the metric, at 1 point per error between defects, but it would matter for a real line.
 - **Parameters were set on the same folds as the scores.** The regularisation strength and the filters make out-of-fold scores slightly optimistic.
-- **No fine-tuning.** [SCORE: decision on fine-tuning.]
+- **The final rule never declares GOOD.** This is the best choice for this metric, not for a production line: every part would still go to re-inspection. Automating GOOD decisions needs a false GOOD rate well under 1%, on real drift.
+- **One error decides the GOOD comparison.** The removal rests on a single image among 528.
+- **No fine-tuning.** The backbone stays frozen.
 
 ## Credits
 

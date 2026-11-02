@@ -53,3 +53,26 @@ def solve_composition(
             if not remainder and 0 <= other <= defects:
                 solutions.append(Composition(n, good, defects - other, other, drift))
     return solutions
+
+
+def false_good_explanations(gap: int, max_declared: int) -> list[dict[str, int]]:
+    """Counts of GOOD decisions, by true class, that add exactly `gap` to the total penalty.
+
+    Moving a label from a defect to GOOD saves 100 on a true GOOD, and adds 9,000 on a drift
+    image, 10,000 on a defect that was correct and 9,999 on a defect that was not.
+    """
+    explanations = []
+    for good in range(max_declared + 1):
+        for drift in range(max_declared + 1 - good):
+            for correct in range(max_declared + 1 - good - drift):
+                for wrong in range(max_declared + 1 - good - drift - correct):
+                    if -100 * good + 9000 * drift + 10000 * correct + 9999 * wrong == gap:
+                        explanations.append(
+                            {
+                                "good": good,
+                                "drift": drift,
+                                "defect_correct_before": correct,
+                                "defect_wrong_before": wrong,
+                            }
+                        )
+    return explanations

@@ -7,11 +7,14 @@ describe the metric and the test set, and are not model results.
 import json
 from pathlib import Path
 
-from valeo_qc.leaderboard import solve_composition
+from valeo_qc.leaderboard import false_good_explanations, solve_composition
 from valeo_qc.metrics import DEFAULT_MATRIX, PENALTY_MATRICES, penalty_to_pwa
 
 SCORE_ALL_DRIFT = 0.808901515151515
 SCORE_ALL_MISSING = 0.985961174242424
+SCORE_NO_GOOD = 0.9925941287878788
+SCORE_GOOD = 0.9911357954545454
+DECLARED_GOOD_ON_TEST = 40
 BENCHMARK_NOTEBOOK = 0.9755256872037915
 OUTPUT = Path("results/leaderboard_constants.json")
 
@@ -45,6 +48,19 @@ def main() -> None:
         "all_missing_penalty_per_image": missing_penalty,
         "all_missing_pwa_check": penalty_to_pwa(sum(missing_penalty.values())),
         "benchmark_pwa_notebook": BENCHMARK_NOTEBOOK,
+    }
+    max_penalty = int(PENALTY_MATRICES[DEFAULT_MATRIX].max())
+    total_no_good = round((1 - SCORE_NO_GOOD) * max_penalty * n)
+    total_good = round((1 - SCORE_GOOD) * max_penalty * n)
+    results["pipeline"] = {
+        "scores": {"no_good": SCORE_NO_GOOD, "good": SCORE_GOOD},
+        "total_penalties": {"no_good": total_no_good, "good": total_good},
+        "gap_explanations": false_good_explanations(
+            total_good - total_no_good, DECLARED_GOOD_ON_TEST
+        ),
+        "drift_detected_minus_false_alarms": round(
+            (1000 * drift + 100 * good - total_no_good) / 1000
+        ),
     }
     OUTPUT.parent.mkdir(exist_ok=True)
     OUTPUT.write_text(json.dumps(results, indent=2) + "\n")
