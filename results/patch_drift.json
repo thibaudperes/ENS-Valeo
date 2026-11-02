@@ -1,0 +1,66 @@
+{
+  "Boucle plate": {
+    "auroc": 0.9187210505631573,
+    "recall": 0.09859154929577464,
+    "false_alarm_good": 0.0,
+    "false_alarm_defects": 0.006024096385542169
+  },
+  "Lift-off blanc": {
+    "auroc": 0.9619745994745994,
+    "recall": 0.018518518518518517,
+    "false_alarm_good": 0.0,
+    "false_alarm_defects": 0.006201092573453418
+  },
+  "Lift-off noir": {
+    "auroc": 0.9534452579473376,
+    "recall": 0.019230769230769232,
+    "false_alarm_good": 0.0,
+    "false_alarm_defects": 0.0060527453523562475
+  },
+  "Short circuit MOS": {
+    "auroc": 0.8277548016262442,
+    "recall": 0.0,
+    "false_alarm_good": 0.0,
+    "false_alarm_defects": 0.006071996530287697
+  },
+  "blur": {
+    "auroc": 0.9474040831118627,
+    "recall": 0.06,
+    "false_alarm_good": 0.0,
+    "false_alarm_defects": 0.006105352832599744
+  },
+  "test_flagged": 0.043601895734597156,
+  "global_knn": {
+    "Boucle plate": {
+      "auroc": 0.9461812914773886,
+      "recall": 0.3380281690140845,
+      "false_alarm_good": 0.0016194331983805667,
+      "false_alarm_defects": 0.005737234652897304
+    },
+    "Lift-off blanc": {
+      "auroc": 0.985377122877123,
+      "recall": 0.17407407407407408,
+      "false_alarm_good": 0.0016194331983805667,
+      "false_alarm_defects": 0.0059058024509080174
+    },
+    "Lift-off noir": {
+      "auroc": 0.9800716624945888,
+      "recall": 0.09615384615384616,
+      "false_alarm_good": 0.0,
+      "false_alarm_defects": 0.0060527453523562475
+    },
+    "Short circuit MOS": {
+      "auroc": 0.9185758290885866,
+      "recall": 0.0,
+      "false_alarm_good": 0.0,
+      "false_alarm_defects": 0.006071996530287697
+    },
+    "blur": {
+      "auroc": 0.9885861319159217,
+      "recall": 0.612,
+      "false_alarm_good": 0.0,
+      "false_alarm_defects": 0.006105352832599744
+    },
+    "test_flagged": 0.06919431279620854
+  }
+}
