@@ -30,5 +30,30 @@
     "other_defects": 0.04734848484848485
   },
   "all_missing_pwa_check": 0.9859611742424242,
-  "benchmark_pwa_notebook": 0.9755256872037915
+  "benchmark_pwa_notebook": 0.9755256872037915,
+  "pipeline": {
+    "scores": {
+      "no_good": 0.9925941287878788,
+      "good": 0.9911357954545454
+    },
+    "total_penalties": {
+      "no_good": 39103,
+      "good": 46803
+    },
+    "gap_explanations": [
+      {
+        "good": 13,
+        "drift": 1,
+        "defect_correct_before": 0,
+        "defect_wrong_before": 0
+      },
+      {
+        "good": 23,
+        "drift": 0,
+        "defect_correct_before": 1,
+        "defect_wrong_before": 0
+      }
+    ],
+    "drift_detected_minus_false_alarms": 35
+  }
 }
