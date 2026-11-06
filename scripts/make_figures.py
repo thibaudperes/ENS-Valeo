@@ -82,13 +82,24 @@ def score_ladder() -> None:
             )
             continue
         ax.plot(shown, y, "o", ms=9, color=PALETTE[role], mec="white", mew=2)
+        if role == "final":
+            # above the point, ending at it: nothing to its right, so first place never crosses it
+            ax.annotate(
+                f"{score:.4f} · {_ordinal(board['rank'])} on the public leaderboard",
+                (shown, y),
+                xytext=(4, 10),
+                textcoords="offset points",
+                ha="right",
+                va="bottom",
+                fontweight="bold",
+            )
+            continue
         ax.annotate(
             f"{score:.4f}",
             (shown, y),
             xytext=(10, 0),
             textcoords="offset points",
             va="center",
-            fontweight="bold" if role == "final" else "normal",
         )
     first = board["first_place_score"]
     ax.axvline(first, color=PALETTE["ink_secondary"], ls=(0, (4, 3)), lw=1.2)
@@ -100,16 +111,6 @@ def score_ladder() -> None:
         ha="left",
         va="center",
         color=PALETTE["ink_secondary"],
-    )
-    ax.annotate(
-        f"{_ordinal(board['rank'])} on the public leaderboard",
-        (pipeline["no_good"], len(rows) - 1),
-        xytext=(0, 12),
-        textcoords="offset points",
-        ha="right",
-        va="bottom",
-        color=PALETTE["ink"],
-        fontweight="bold",
     )
     ax.set_yticks(range(len(rows)), [name for name, _, _ in rows])
     ax.set_xlim(left, 1.0)
