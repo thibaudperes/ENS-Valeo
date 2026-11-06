@@ -1,8 +1,38 @@
 # Valeo visual quality control
 
-[![CI](https://github.com/thibaudperes/ens-challenge-valeo-qc/actions/workflows/ci.yml/badge.svg)](https://github.com/thibaudperes/ens-challenge-valeo-qc/actions/workflows/ci.yml)
+[![CI](https://github.com/thibaudperes/ENS-Valeo/actions/workflows/ci.yml/badge.svg)](https://github.com/thibaudperes/ENS-Valeo/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
 Image classification and out-of-domain detection on a production line, for [ENS Challenge Data n°157](https://challengedata.ens.fr/challenges/157) by Valeo.
+
+<p align="center">
+  <img src="reports/figures/a_score_ladder.png" width="720" alt="Public scores from the worst constant prediction to my final pipeline, with first place as a dashed line">
+  <br><em>Public scores, from a constant prediction to my final pipeline. First place is the dashed line.</em>
+</p>
+
+<p align="center">
+  <strong>2nd on the public leaderboard</strong> · <strong>0.9926</strong> · <strong>drift detected without a single labelled drift image</strong>
+</p>
+
+**TL;DR**
+
+- Valeo photographs electronic components on a production line and wants a model that sorts each photo: good part, one of five defects, or "something unusual".
+- The unusual photos were missing from the training data, so I built a detector that flags photos unlike anything seen before.
+- I found out how the leaderboard really scores errors, then let that cost drive every decision the model makes.
+- The result ranks 2nd of all public submissions, and one command rebuilds it on a laptop.
+
+## What this project shows
+
+| Skill | Evidence |
+|---|---|
+| Computer vision with foundation models | Frozen DINOv2 embeddings and a logistic regression, no fine-tuning: [Baselines](#baselines), [embedding map](#drift-detection) |
+| Out-of-distribution detection | A kNN detector tested on pseudo-drift built from held-out defects and blur: [Drift detection](#drift-detection) |
+| Cost-sensitive decisions | Minimum-cost labels divide the penalty by 5: [Baselines](#baselines), [Decision rule](#decision-rule) |
+| Metric reverse-engineering | Two probe submissions identify the matrix and the test composition: [Metric](#metric) |
+| Rigorous validation | Out-of-fold scores, near-duplicate check, negative results kept: [Validation](#validation), [What didn't work](#what-didnt-work) |
+| Engineering and CI | `uv`, tests, ruff, pre-commit, GitHub Actions, one-command pipeline: [Reproduce](#reproduce), [Project layout](#project-layout) |
+
+## Summary
 
 - **Model:** logistic regression on frozen DINOv2 embeddings and a kNN drift detector per component. The final rule never declares GOOD, because the leaderboard showed that it costs more than it saves.
 - **Result:** public score of 0.9926, 2nd on the public leaderboard (November 2, 2026; first place at 0.9941), against 0.9860 for a constant prediction and 0.9755 for the notebook benchmark, computed on the whole test set. At least 35 of the 68 drift images are detected.
@@ -63,11 +93,16 @@ Each image gets one of seven labels: GOOD, five defect classes, or Drift. Drift 
 
 Images are 8-bit greyscale PNG files from 4 components (`lib`) and 2 inspection zones (`window`). Each component has its own orientation and scale. Some component and defect pairs have 2 or 3 examples. 21 images are magnified by about 1.85.
 
-No challenge image is published here: the data is available to registered participants only.
+No challenge image is published here: the data is available to registered participants only. The figures show aggregates, 2D projections of embeddings and penalty tables.
 
 ## Metric
 
 The score is `1 - mean penalty / 10000`, with one penalty per pair of true and predicted labels. The challenge page and the supplied notebook give different matrices:
+
+<p align="center">
+  <img src="reports/figures/b_metric_matrices.png" width="720" alt="The two penalty matrices side by side, with the six cells that differ boxed">
+  <br><em>The two matrices differ on six cells, all in the Drift column. The All Drift probe settles which one the leaderboard uses.</em>
+</p>
 
 | True → predicted | Page | Notebook |
 |---|---:|---:|
@@ -90,11 +125,21 @@ The two probe scores also reveal what is evaluated. Total penalties are whole nu
 | Missing | 374 | 70.8% | 0 |
 | Other defects | 25 | 4.7% | 0.05 |
 
+<p align="center">
+  <img src="reports/figures/c_penalty_sources.png" width="720" alt="Penalty of the constant All Missing prediction split by source: drift 92 percent">
+  <br><em>Where the penalty of a constant prediction comes from: almost all of it is undetected drift.</em>
+</p>
+
 This changed the plan: undetected drift accounts for 92% of the penalty of a constant prediction, so the detector came before any fine-tuning. These shares come from the leaderboard: the code that produces predictions does not read them, but they did guide the choice of operating points (see [Limits](#limits-and-next-steps)).
 
 ## Baselines
 
 The train set has no drift image, so these scores cover the six known classes only and cannot be compared with leaderboard scores.
+
+<p align="center">
+  <img src="reports/figures/g_argmax_vs_minimum_cost.png" width="720" alt="Mean penalty of argmax, constant and minimum-cost predictions">
+  <br><em>The same probabilities, two ways to pick a label: argmax loses to a constant, minimum cost divides the penalty by 5.</em>
+</p>
 
 | Prediction | Mean penalty | PWA | False GOOD rate | GOOD recall |
 |---|---:|---:|---:|---:|
@@ -106,7 +151,10 @@ With argmax, a model with a log loss of 0.031 does worse than a constant. Accoun
 
 **Embeddings.** Frozen DINOv2 ViT-S/14, 768 dimensions per view: the class token and the mean of the patch tokens. Each image gives a crop view and a full view. The cache takes 34 MB in float16 and extraction takes about 15 minutes on the M1.
 
-**Preprocessing.** Each image is rotated to a common orientation and cropped, per component. Oversized images are first scaled by 0.54 and centred:
+**Preprocessing.** Each image is rotated to a common orientation and cropped, per component. Oversized images are first scaled by 0.54 and centred.
+
+<details>
+<summary>Alignment of the oversized images, per component</summary>
 
 | Component | Oversized images | Fixed crop | Resize to base size | Scale and centre |
 |---|---:|---:|---:|---:|
@@ -115,6 +163,8 @@ With argmax, a model with a log loss of 0.031 does worse than a constant. Accoun
 | Die04 | 2 | 0.082 | 0.227 | 0.227 |
 
 The table gives the median correlation with the same defects at the base scale.
+
+</details>
 
 ## Validation
 
@@ -125,6 +175,11 @@ Keeping near-duplicates in the same fold moves the penalty from 4.17 to between 
 ## Drift detection
 
 No labelled drift exists in the train set, so pseudo-drift replaces it: each rare defect removed from training, and 500 blurred train images. Models that score a blurred image never saw its source.
+
+<p align="center">
+  <img src="reports/figures/d_embedding_map.png" width="720" alt="t-SNE map of DINOv2 embeddings of the train images coloured by class, with blurred copies as crosses">
+  <br><em>t-SNE of the embeddings, one point per image. Blurred copies leave the known clusters; Short circuit MOS sits among GOOD images.</em>
+</p>
 
 **Measured first:** without a detector, the classifier sends pseudo-drift to GOOD, even with the minimum-cost rule.
 
@@ -138,6 +193,14 @@ No labelled drift exists in the train set, so pseudo-drift replaces it: each rar
 
 **Detector.** The score is the mean cosine distance to the 5 nearest train images of the same component, on the crop embedding. Each component has a threshold that flags 0.5% of known images.
 
+<p align="center">
+  <img src="reports/figures/e_drift_detector.png" width="720" alt="Share of images above each kNN distance for known images and each pseudo-drift type, and ROC curves of kNN against Mahalanobis">
+  <br><em>Top: the share of each group above the threshold is its detection rate. Bottom: kNN against Mahalanobis, false alarms on a log scale.</em>
+</p>
+
+<details>
+<summary>AUROC and recall per pseudo-drift type</summary>
+
 | Pseudo-drift | kNN AUROC | Mahalanobis AUROC | Recall at 0.5% false alarms |
 |---|---:|---:|---:|
 | Blur | 0.989 | 0.984 | 61.2% |
@@ -145,6 +208,8 @@ No labelled drift exists in the train set, so pseudo-drift replaces it: each rar
 | Lift-off noir | 0.980 | 0.965 | 9.6% |
 | Boucle plate | 0.946 | 0.922 | 33.8% |
 | Short circuit MOS | 0.919 | 0.876 | 0.0% |
+
+</details>
 
 The detector flags 73 of the 1,055 test images (6.9%).
 
@@ -154,6 +219,14 @@ An image is labelled **Drift** if its kNN distance exceeds the threshold of its 
 
 This comes from a rule that was tested and removed. It declared GOOD when the calibrated P(GOOD) exceeded the minimum-cost threshold of about 0.99 (temperature T = 1.16), and when the image lay among the closest 25% of known GOOD images of its component. Declaring GOOD can save at most 11.6 penalty points per image, while each drift image declared GOOD costs 10,000 instead of 1,000.
 
+<p align="center">
+  <img src="reports/figures/f_good_decision.png" width="720" alt="Expected gain and loss of declaring GOOD for each proximity filter, and the expected against measured result">
+  <br><em>The submitted filter looked slightly positive on paper. On the leaderboard, one false GOOD erased the whole gain.</em>
+</p>
+
+<details>
+<summary>Expected gain and loss per proximity filter</summary>
+
 | Proximity filter | GOOD recall | Pseudo-drift declared GOOD | Expected gain | Expected loss |
 |---:|---:|---:|---:|---:|
 | None | 80.6% | 9.0% | 9.3 | 106.7 |
@@ -161,7 +234,11 @@ This comes from a rule that was tested and removed. It declared GOOD when the ca
 | Closest 50% | 44.0% | 1.1% | 5.1 | 12.9 |
 | Closest 25% (submitted) | 22.3% | 0.2% | 2.6 | 1.8 |
 
-Gain and loss are in penalty points per image, using the shares read from the leaderboard. The share declared GOOD is the plain mean over pseudo-drift types, because the mix of real drift is unknown. The expected net gain was 0.7 points. The leaderboard measured a loss of 14.6 points (see below).
+Gain and loss are in penalty points per image, using the shares read from the leaderboard. The share declared GOOD is the plain mean over pseudo-drift types, because the mix of real drift is unknown.
+
+</details>
+
+The expected net gain was 0.7 points. The leaderboard measured a loss of 14.6 points (see below).
 
 ## What didn't work
 
@@ -198,16 +275,20 @@ uv run python scripts/evaluate_decision.py      # GOOD filter
 uv run python scripts/extract_patches.py
 uv run python scripts/evaluate_patch_drift.py   # patch-based detection
 uv run python scripts/leaderboard_analysis.py   # metric and test composition
+uv run python scripts/make_figures.py           # figures of this README
 uv run pytest
 ```
 
 `scripts/make_constant_submissions.py` writes the probe submissions.
 
+`make_figures.py` reads `results/*.json` and the embedding cache. It recomputes the detector scores and stops if an AUROC moves away from `results/drift.json`, so the figures cannot drift from the tables.
+
 ## Project layout
 
 ```
-scripts/                 pipeline, experiments and analyses
+scripts/                 pipeline, experiments, analyses and figures
 results/                 aggregate results, as JSON
+reports/figures/         README figures, no challenge image
 src/valeo_qc/
     alignment.py         rotation and crop of each component
     preprocessing.py     image views and model input
@@ -221,6 +302,7 @@ src/valeo_qc/
     pipeline.py          from embeddings to final labels
     submission.py        submission writing and validation
     leaderboard.py       analysis of probe scores, unused by the pipeline
+    viz.py               figure style and colour-blind-checked palette
 tests/
 ```
 
@@ -236,6 +318,8 @@ tests/
 - **One error decides the GOOD comparison.** The removal rests on a single image among 528.
 - **No fine-tuning.** The backbone stays frozen.
 
-## Credits
+## Credits and license
 
 Data and benchmark notebook by Valeo, through [Challenge Data](https://challengedata.ens.fr/). The test predictions and labels stored in the supplied notebook were not used. DINOv2 by Meta AI.
+
+The code is released under the [MIT license](LICENSE). The data belongs to Valeo and the challenge organisers: it is not included here and is not covered by this license.
